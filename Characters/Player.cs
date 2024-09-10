@@ -13,4 +13,9 @@ public class Player(int health) : Character(health)
     {
         
     }
+
+    public void AddGold(int amount)
+    {
+        Gold += amount;
+    }
 }
