@@ -1,21 +1,32 @@
 namespace TextAdventure.Items.Armor;
 
-public class ArmorFactory
+public static class ArmorFactory
 {
-    private List<ArmorComponent> prefixes =
+    private static List<ArmorComponent> prefixes =
     [
     ];
 
-    private List<ArmorComponent> armorTypes = 
+    private static List<ArmorComponent> armorTypes = 
     [
     ];
 
-    private List<ArmorComponent> suffixes =
+    private static List<ArmorComponent> suffixes =
     [
     ];
     
-    public Armor GenerateArmor()
+    public static Armor GenerateArmor()
     {
         throw new NotImplementedException();
+    }
+    
+    public static Armor GetDefaultArmor()
+    {
+        ArmorComponent prefix = new("", 0, 0);
+        ArmorComponent armorType = new("Sword", 3, 0.8f);
+        ArmorComponent suffix = new("", 0, 0);
+
+        Armor armor = new(prefix, armorType, suffix);
+
+        return armor;
     }
 }
