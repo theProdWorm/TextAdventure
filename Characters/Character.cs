@@ -2,12 +2,14 @@ namespace TextAdventure.Characters;
 using TextAdventure.Items.Weapons;
 using TextAdventure.Items.Armor;
 
-public abstract class Character(int health)
+public abstract class Character(string name, int health)
 {
-    protected int _maxHealth = health;
+    public string Name { get; } = name;
+    
+    protected readonly int _maxHealth = health;
     protected int _currentHealth = health;
-    protected Weapon? _weapon;
-    protected Armor? _armor;
+    protected Weapon _weapon = WeaponFactory.GetDefaultWeapon();
+    protected Armor _armor = ArmorFactory.GetDefaultArmor();
 
     public void TakeDamage(int damage)
     {
@@ -15,7 +17,19 @@ public abstract class Character(int health)
     }
     public void Heal(int healAmount)
     {
-        _currentHealth += healAmount;
+        int realAmountHealed = healAmount;
+        
+        if(_currentHealth + healAmount > _maxHealth)
+        {
+            _currentHealth = _maxHealth;
+            realAmountHealed = _maxHealth - _currentHealth;
+        }
+        else
+        {
+            _currentHealth += healAmount;
+        }
+        
+        TextHandler.PrettyWrite($"{Name} healed {realAmountHealed}");
     }
 
     public void Equip(Weapon weapon)

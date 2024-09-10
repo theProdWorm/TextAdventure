@@ -2,9 +2,16 @@ using TextAdventure.Characters;
 
 namespace TextAdventure.Items.Items;
 
-public abstract class Item(string name, Action<Character> use)
+public abstract class Item(string name)
 {
+    public enum ItemType
+    {
+        Healing,
+        Key,
+        Weapon,
+        Armor
+    }
+    
     public string Name { get; } = name;
-
-    public Action<Character> Use = use;
+    public ItemType Type { get; } = ItemType.Healing;
 }

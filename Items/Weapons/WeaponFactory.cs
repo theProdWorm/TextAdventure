@@ -1,6 +1,6 @@
 namespace TextAdventure.Items.Weapons;
 
-public class WeaponFactory
+public static class WeaponFactory
 {
     private static List<WeaponComponent> prefixes =
     [
@@ -21,5 +21,16 @@ public class WeaponFactory
     public static Weapon GenerateWeapon()
     {
         throw new NotImplementedException();
+    }
+
+    public static Weapon GetDefaultWeapon()
+    {
+        WeaponComponent prefix = new("", 0, 0);
+        WeaponComponent weaponType = new("Sword", 3, 0.8f);
+        WeaponComponent suffix = new("", 0, 0);
+
+        Weapon weapon = new(prefix, weaponType, suffix);
+
+        return weapon;
     }
 }
