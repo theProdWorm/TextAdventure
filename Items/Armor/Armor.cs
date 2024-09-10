@@ -1,6 +1,9 @@
+using TextAdventure.Items.Items;
+
 namespace TextAdventure.Items.Armor;
 
-public class Armor(ArmorComponent prefix, ArmorComponent armorType, ArmorComponent suffix)
+public class Armor(ArmorComponent prefix, ArmorComponent armorType, ArmorComponent suffix) : Item(
+    $"{prefix.Name} {armorType.Name} of {suffix.Name}", (_) => TextHandler.PrettyWrite("How did you even use this?"))
 {
     private readonly ArmorComponent _prefix = prefix;
     private readonly ArmorComponent _armorType = armorType;
