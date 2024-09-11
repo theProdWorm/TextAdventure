@@ -1,21 +1,23 @@
 using TextAdventure.Characters;
-using TextAdventure.Items.Armor;
+using TextAdventure.Items;
+using TextAdventure.Items.Armors;
+using TextAdventure.Items.Loot;
 
 namespace TextAdventure.World;
 
-public static class RoomFactory
+public class RoomFactory(EnemyFactory enemyFactory, LootFactory lootFactory)
 {
-    private static Dictionary<string, Room> _roomArchetypes = new()
+    private EnemyFactory _enemyFactory = enemyFactory;
+    private LootFactory _lootFactory = lootFactory;
+    
+    private Dictionary<string, Room> _roomArchetypes = [];
+    
+    public void RegisterRoomArchetype(string index, Room room)
     {
-        {
-            "Armor", new ArmorRoom(ArmorFactory.GetDefaultArmor(), 20)
-        },
-        {
-            "Gold", new Room(80)
-        }
-    };
-
-    public static Room GenerateRoom(int floor, int roomNumber)
+        _roomArchetypes.Add(index, room);
+    }
+    
+    public Room GenerateRoom(int floor, int roomNumber)
     {
         throw new NotImplementedException();
         // TODO: Generate enemies

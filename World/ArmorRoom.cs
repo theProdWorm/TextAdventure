@@ -1,5 +1,5 @@
 using TextAdventure.Characters;
-using TextAdventure.Items.Armor;
+using TextAdventure.Items.Armors;
 
 namespace TextAdventure.World;
 

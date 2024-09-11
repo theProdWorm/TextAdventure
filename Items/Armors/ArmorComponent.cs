@@ -1,4 +1,4 @@
-namespace TextAdventure.Items.Armor;
+namespace TextAdventure.Items.Armors;
 
 public class ArmorComponent(string name, int health, float evasion)
 {

@@ -1,15 +1,16 @@
+using TextAdventure.Items.Armors;
+
 namespace TextAdventure.Characters;
 using TextAdventure.Items.Weapons;
-using TextAdventure.Items.Armor;
 
 public abstract class Character(string name, int health)
 {
     public string Name { get; } = name;
-    
-    protected readonly int _maxHealth = health;
-    protected int _currentHealth = health;
-    protected Weapon _weapon = WeaponFactory.GetDefaultWeapon();
-    protected Armor _armor = ArmorFactory.GetDefaultArmor();
+
+    private readonly int _maxHealth = health;
+    private int _currentHealth = health;
+    protected Weapon _weapon = WeaponFactory.DefaultWeapon;
+    protected Armor _armor = ArmorFactory.DefaultArmor;
 
     public void TakeDamage(int damage)
     {

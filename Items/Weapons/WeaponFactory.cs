@@ -1,36 +1,34 @@
+using TextAdventure.Items.Loot;
+
 namespace TextAdventure.Items.Weapons;
 
-public static class WeaponFactory
+public class WeaponFactory
 {
-    private static List<WeaponComponent> prefixes =
-    [
-        new("Rusty", -1, 0),
-        new("Legendary", 3, 1.0f)
-    ];
+    public static readonly Weapon DefaultWeapon = new(
+        new("Clunky", 0, 0),
+        new("Sword", 3, 0.8f),
+        new("the Rookie", 0, 0));
 
-    private static List<WeaponComponent> weaponTypes =
-    [
-        new("Sword", 3, 0.8f)
-    ];
+    private List<LootElement<WeaponComponent>> prefixes = new();
+    private List<LootElement<WeaponComponent>> armorTypes = new();
+    private List<LootElement<WeaponComponent>> suffixes = new();
 
-    private static List<WeaponComponent> suffixes =
-    [
-        new("Divine Retribution", 5, 0.2f)
-    ];
-
-    public static Weapon GenerateWeapon()
+    public WeaponFactory()
     {
-        throw new NotImplementedException();
+        prefixes.Add(new(10, new("", 0, 0)));
+        suffixes.Add(new(10, new("", 0, 0)));
     }
 
-    public static Weapon GetDefaultWeapon()
+    public void RegisterPrefix(int weight, WeaponComponent prefix) =>
+        prefixes.Add(new(weight, prefix));
+    public void RegisterArmorType(int weight, WeaponComponent armorType) =>
+        armorTypes.Add(new(weight, armorType));
+    public void RegisterSuffix(int weight, WeaponComponent suffix) =>
+        suffixes.Add(new(weight, suffix));
+
+
+    public Weapon GenerateWeapon()
     {
-        WeaponComponent prefix = new("", 0, 0);
-        WeaponComponent weaponType = new("Sword", 3, 0.8f);
-        WeaponComponent suffix = new("", 0, 0);
-
-        Weapon weapon = new(prefix, weaponType, suffix);
-
-        return weapon;
+        throw new NotImplementedException();
     }
 }

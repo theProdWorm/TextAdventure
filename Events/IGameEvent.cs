@@ -2,5 +2,5 @@ namespace TextAdventure;
 
 public interface IGameEvent
 {
-    public void Trigger();
+    public IGameEvent Trigger();
 }

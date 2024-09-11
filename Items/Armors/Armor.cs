@@ -1,6 +1,6 @@
 using TextAdventure.Items.Items;
 
-namespace TextAdventure.Items.Armor;
+namespace TextAdventure.Items.Armors;
 
 public class Armor(ArmorComponent prefix, ArmorComponent armorType, ArmorComponent suffix) : Item(
     $"{prefix.Name} {armorType.Name} of {suffix.Name}")
