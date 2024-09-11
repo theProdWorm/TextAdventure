@@ -24,12 +24,22 @@ public class LootFactory(ArmorFactory armorFactory, WeaponFactory weaponFactory)
         throw new NotImplementedException();
     }
 
-    public LootHoard GenerateArmorLoot(ArmorFactory armorFactory)
+    public LootHoard GenerateArmorLoot()
     {
         int gold = Game.random.Next(5, 30);
-        Armor armor = armorFactory.GenerateArmor();
+        Armor armor = _armorFactory.GenerateArmor();
 
         LootHoard loot = new(gold, armor);
+
+        return loot;
+    }
+
+    public LootHoard GenerateWeaponLoot()
+    {
+        int gold = Game.random.Next(5, 30);
+        Weapon weapon = _weaponFactory.GenerateWeapon();
+
+        LootHoard loot = new(gold, weapon);
 
         return loot;
     }

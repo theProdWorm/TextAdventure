@@ -27,10 +27,10 @@ public static class TextHandler
             Thread.Sleep(TextDelay);
         }
         
-        Console.ForegroundColor = ConsoleColor.White;
+        Console.ForegroundColor = ConsoleColor.Gray;
         
         if(isLastLine)
-            Console.WriteLine(">");
+            Console.Write("\n>");
     }
 
     private static ConsoleColor GetColor(TextType type) => type switch {
@@ -39,7 +39,7 @@ public static class TextHandler
         TextType.Bad => ConsoleColor.Red,
         TextType.Description => ConsoleColor.Yellow,
         TextType.Option => ConsoleColor.Cyan,
-        TextType.Normal => ConsoleColor.White,
-        _ => ConsoleColor.White,
+        TextType.Normal => ConsoleColor.Gray,
+        _ => ConsoleColor.Gray,
     };
 }

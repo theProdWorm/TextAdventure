@@ -1,13 +1,38 @@
+using TextAdventure.Factories;
+using TextAdventure.Items.Armors;
+using TextAdventure.Items.Loot;
+
 namespace TextAdventure.World;
 
 public class Floor
 {
-    private List<Room> _rooms = new List<Room>();
+    #region FACTORIES
+    public WeaponFactory WeaponFactory { get; }
+    public ArmorFactory ArmorFactory { get; }
+    public EnemyFactory EnemyFactory { get; }
+    public RoomFactory RoomFactory { get; }
+    public LootFactory LootFactory { get; }
+    #endregion FACTORIES
 
-    public Room CurrentRoom { get; private set; }
+    private List<Room> _rooms = [];
+    private int _currentRoomIndex = 0;
 
-    public Floor()
+    public Floor(WeaponFactory weaponFactory, ArmorFactory armorFactory, EnemyFactory enemyFactory)
     {
-        // TODO: Generate a set of rooms and add to _rooms
+        WeaponFactory = weaponFactory;
+        ArmorFactory = armorFactory;
+        EnemyFactory = enemyFactory;
+        
+        LootFactory = new LootFactory(ArmorFactory, WeaponFactory);
+        
+        RoomFactory = new RoomFactory(EnemyFactory, LootFactory);
+    }
+
+    public Room CurrentRoom => _rooms[_currentRoomIndex];
+
+    public Room GenerateRoom()
+    {
+        throw new NotImplementedException();
+        
     }
 }

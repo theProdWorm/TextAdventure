@@ -15,10 +15,10 @@ public class RoomFactory(EnemyFactory enemyFactory, LootFactory lootFactory) : F
         _roomArchetypes.Add(index, room);
     }
     
-    public Room GenerateRoom(int floor, int roomNumber)
+    public Room GenerateRoom()
     {
         throw new NotImplementedException();
-        // TODO: Generate enemies
-        // TODO: Generate type of loot
+        // TODO: Generate type of room
+        // TODO: If it's a combat room, generate enemies and loot
     }
 }

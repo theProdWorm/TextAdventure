@@ -1,6 +1,4 @@
-using TextAdventure.World;
-
-namespace TextAdventure.StateMachine;
+namespace TextAdventure.States;
 
 public class ChoiceEvent(string description, string[] choices)
 {

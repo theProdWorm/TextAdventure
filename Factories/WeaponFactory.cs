@@ -21,7 +21,7 @@ public class WeaponFactory : Factory
 
     public void RegisterPrefix(int weight, WeaponComponent prefix) =>
         _prefixes.Add(new(weight, prefix));
-    public void RegisterArmorType(int weight, WeaponComponent armorType) =>
+    public void RegisterWeaponType(int weight, WeaponComponent armorType) =>
         _armorTypes.Add(new(weight, armorType));
     public void RegisterSuffix(int weight, WeaponComponent suffix) =>
         _suffixes.Add(new(weight, suffix));
