@@ -4,14 +4,15 @@ namespace TextAdventure.World;
 
 public class Room
 {
-    private List<Character> _enemies;
-    public List<Character> Enemies { get => _enemies; }
+    public List<Character> Enemies { get; private set; }
 
-    private int _rewardGold;
+    private readonly int _rewardGold;
 
     public Room(int rewardGold)
     {
-        _enemies = new List<Character>();
+        // TODO: Generate gold instead?
+        
+        Enemies = new List<Character>();
         _rewardGold = rewardGold;
     }
 

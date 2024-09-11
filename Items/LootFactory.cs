@@ -2,9 +2,9 @@ using TextAdventure.Items.Items;
 
 namespace TextAdventure.Items;
 
-public class LootFactory
+public static class LootFactory
 {
-    private List<Item> _allItems =
+    private static List<Item> _allItems =
     [
     ];
     

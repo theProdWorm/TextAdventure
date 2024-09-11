@@ -15,6 +15,7 @@ public class WeaponRoom : Room
     public override void RewardPlayer(Player player)
     {
         base.RewardPlayer(player);
-        //TODO: give player their cool new weapon
+        // TODO: Prompt the player to pick up their reward or discard it
+        // TODO: If they want it, give the player their cool new weapon
     }
 }

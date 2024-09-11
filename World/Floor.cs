@@ -2,14 +2,12 @@ namespace TextAdventure.World;
 
 public class Floor
 {
-    private RoomFactory _roomFactory;
     private List<Room> _rooms = new List<Room>();
-    
-    private Room _currentRoom;
-    public Room CurrentRoom { get => _currentRoom; }
 
-    public Floor(RoomFactory roomFactory)
+    public Room CurrentRoom { get; private set; }
+
+    public Floor()
     {
-        
+        // TODO: Generate a set of rooms and add to _rooms
     }
 }

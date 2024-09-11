@@ -15,6 +15,7 @@ public class ItemRoom : Room
     public override void RewardPlayer(Player player)
     {
         base.RewardPlayer(player);
-        //TODO: Give Player their fancy new item
+        // TODO: Prompt the player to pick up their reward or discard it
+        // TODO: If they want it, give the player their fancy new item
     }
 }
