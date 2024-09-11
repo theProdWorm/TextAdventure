@@ -12,3 +12,4 @@ C:\Users\emilr\RiderProjects\TextAdventure\obj\Debug\net8.0\refint\TextAdventure
 C:\Users\emilr\RiderProjects\TextAdventure\obj\Debug\net8.0\TextAdventure.pdb
 C:\Users\emilr\RiderProjects\TextAdventure\obj\Debug\net8.0\TextAdventure.genruntimeconfig.cache
 C:\Users\emilr\RiderProjects\TextAdventure\obj\Debug\net8.0\ref\TextAdventure.dll
+C:\Users\emilr\RiderProjects\TextAdventure\obj\Debug\net8.0\TextAdventure.sourcelink.json

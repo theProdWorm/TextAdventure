@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using TextAdventure.Factories;
 using TextAdventure.Items.Items;
 using TextAdventure.Items.Armors;
 using TextAdventure.Items.Weapons;

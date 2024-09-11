@@ -1,11 +1,9 @@
-using TextAdventure.Characters;
-using TextAdventure.Items;
-using TextAdventure.Items.Armors;
 using TextAdventure.Items.Loot;
+using TextAdventure.World;
 
-namespace TextAdventure.World;
+namespace TextAdventure.Factories;
 
-public class RoomFactory(EnemyFactory enemyFactory, LootFactory lootFactory)
+public class RoomFactory(EnemyFactory enemyFactory, LootFactory lootFactory) : Factory
 {
     private EnemyFactory _enemyFactory = enemyFactory;
     private LootFactory _lootFactory = lootFactory;

@@ -3,16 +3,40 @@ using TextAdventure.World;
 
 namespace TextAdventure;
 
-public class Game
+public class Game(Player player)
 {
     public static Random random = new();
     
-    private Player _player;
-    private List<Floor> _floors;
+    private Player _player = player;
+    private List<Floor> _floors = [];
     private Floor _currentFloor;
 
-    public Game(Player player)
+    private bool _isGameRunning = true;
+    
+    private Action _currentState;
+
+    public void Loop()
     {
-        _player = player;
+        _currentState = HandlePickingRoom;
+        
+        while (_isGameRunning)
+        {
+            _currentState();
+        }
+    }
+
+    private void HandleCombat()
+    {
+        
+    }
+
+    private void HandleShop()
+    {
+        
+    }
+
+    private void HandlePickingRoom()
+    {
+        
     }
 }

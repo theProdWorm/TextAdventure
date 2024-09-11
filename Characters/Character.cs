@@ -1,3 +1,4 @@
+using TextAdventure.Factories;
 using TextAdventure.Items.Armors;
 
 namespace TextAdventure.Characters;
