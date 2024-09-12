@@ -1,9 +1,11 @@
+using TextAdventure.Items.Armors;
 using TextAdventure.Items.Items;
+using TextAdventure.Items.Weapons;
 
 namespace TextAdventure.Characters;
 using TextAdventure.Items;
 
-public class Player(string name, int health) : Character(name, health)
+public class Player(string name, int health, Weapon weapon, Armor armor) : Character(name, health, weapon, armor)
 {
     public int Gold { get; private set; }
 

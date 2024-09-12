@@ -13,3 +13,18 @@ C:\Users\emilr\RiderProjects\TextAdventure\obj\Debug\net8.0\TextAdventure.pdb
 C:\Users\emilr\RiderProjects\TextAdventure\obj\Debug\net8.0\TextAdventure.genruntimeconfig.cache
 C:\Users\emilr\RiderProjects\TextAdventure\obj\Debug\net8.0\ref\TextAdventure.dll
 C:\Users\emilr\RiderProjects\TextAdventure\obj\Debug\net8.0\TextAdventure.sourcelink.json
+C:\Users\josef\Documents\HiS\År 1\[1] Spelprogrammering 1\TextAdventure\bin\Debug\net8.0\TextAdventure.exe
+C:\Users\josef\Documents\HiS\År 1\[1] Spelprogrammering 1\TextAdventure\bin\Debug\net8.0\TextAdventure.deps.json
+C:\Users\josef\Documents\HiS\År 1\[1] Spelprogrammering 1\TextAdventure\bin\Debug\net8.0\TextAdventure.runtimeconfig.json
+C:\Users\josef\Documents\HiS\År 1\[1] Spelprogrammering 1\TextAdventure\bin\Debug\net8.0\TextAdventure.dll
+C:\Users\josef\Documents\HiS\År 1\[1] Spelprogrammering 1\TextAdventure\bin\Debug\net8.0\TextAdventure.pdb
+C:\Users\josef\Documents\HiS\År 1\[1] Spelprogrammering 1\TextAdventure\obj\Debug\net8.0\TextAdventure.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\josef\Documents\HiS\År 1\[1] Spelprogrammering 1\TextAdventure\obj\Debug\net8.0\TextAdventure.AssemblyInfoInputs.cache
+C:\Users\josef\Documents\HiS\År 1\[1] Spelprogrammering 1\TextAdventure\obj\Debug\net8.0\TextAdventure.AssemblyInfo.cs
+C:\Users\josef\Documents\HiS\År 1\[1] Spelprogrammering 1\TextAdventure\obj\Debug\net8.0\TextAdventure.csproj.CoreCompileInputs.cache
+C:\Users\josef\Documents\HiS\År 1\[1] Spelprogrammering 1\TextAdventure\obj\Debug\net8.0\TextAdventure.sourcelink.json
+C:\Users\josef\Documents\HiS\År 1\[1] Spelprogrammering 1\TextAdventure\obj\Debug\net8.0\TextAdventure.dll
+C:\Users\josef\Documents\HiS\År 1\[1] Spelprogrammering 1\TextAdventure\obj\Debug\net8.0\refint\TextAdventure.dll
+C:\Users\josef\Documents\HiS\År 1\[1] Spelprogrammering 1\TextAdventure\obj\Debug\net8.0\TextAdventure.pdb
+C:\Users\josef\Documents\HiS\År 1\[1] Spelprogrammering 1\TextAdventure\obj\Debug\net8.0\TextAdventure.genruntimeconfig.cache
+C:\Users\josef\Documents\HiS\År 1\[1] Spelprogrammering 1\TextAdventure\obj\Debug\net8.0\ref\TextAdventure.dll

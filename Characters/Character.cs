@@ -4,14 +4,24 @@ using TextAdventure.Items.Armors;
 namespace TextAdventure.Characters;
 using TextAdventure.Items.Weapons;
 
-public abstract class Character(string name, int health)
+public class Character
 {
-    public string Name { get; } = name;
+    public string Name { get; }
 
-    private readonly int _maxHealth = health;
-    private int _currentHealth = health;
-    private Weapon _weapon = WeaponFactory.DefaultWeapon;
-    private Armor _armor = ArmorFactory.DefaultArmor;
+    private readonly int _maxHealth;
+    public int EffectiveMaxHealth { get => _maxHealth + _armor.Health; }
+    private int _currentHealth;
+    protected Weapon _weapon;
+    protected Armor _armor;
+
+    public Character(string name, int health, Weapon weapon, Armor armor)
+    {
+        Name = name;
+        _maxHealth = health;
+        _currentHealth = EffectiveMaxHealth;
+        _weapon = weapon;
+        _armor = armor;
+    }
 
     public bool IsDead => _currentHealth <= 0;
     
