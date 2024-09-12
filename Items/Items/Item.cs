@@ -17,4 +17,6 @@ public abstract class Item(string name)
     {
         TextHandler.PrettyWrite(Name, TextHandler.TextType.Description);
     }
+    
+    public new abstract string ToString();
 }

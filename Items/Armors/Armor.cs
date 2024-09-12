@@ -20,4 +20,9 @@ Health: {Health}
 Evasion: {Evasion}
 ", TextHandler.TextType.Good);
     }
+
+    public override string ToString()
+    {
+        throw new NotImplementedException();
+    }
 }

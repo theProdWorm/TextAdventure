@@ -6,4 +6,9 @@ public class HealthPotion(string name, int healAmount)
     : Item(name)
 {
     public int HealAmount => healAmount;
+
+    public override string ToString()
+    {
+        throw new NotImplementedException();
+    }
 }
