@@ -95,7 +95,7 @@ public class Game
         while (enemies.Count > 0)
         {
             if (isPlayerTurn)
-                CombatPlayerTurn(enemies);
+                isPlayerTurn = CombatPlayerTurn(ref enemies);
             else
                 CombatEnemyTurn(enemies);
 
@@ -127,7 +127,8 @@ public class Game
         //ChoiceEvent choice = new(description, )
     }
 
-    private void CombatPlayerTurn(List<Character> enemies)
+    /// <returns>Whether the action taken should end the turn</returns>
+    private bool CombatPlayerTurn(ref List<Character> enemies)
     {
         const string combatDescription = "You are in combat! What is your next move?";
         string[] combatChoices = ["Attack", "Use item"];
@@ -150,7 +151,11 @@ public class Game
                 int enemyIndex = attackChoice.GetChoice() - 1;
                 
                 _player.Attack(enemies[enemyIndex]);
-                break;
+
+                if(enemies[enemyIndex].IsDead)
+                    enemies.RemoveAt(enemyIndex);
+                
+                return true;
             case 2:
                 const string useItemDescription = "What item do you want to use?";
                 string[] useItemChoices = new string[_player.Inventory.Length];
@@ -168,8 +173,9 @@ public class Game
                 ChoiceEvent useItemChoice = new(useItemDescription, useItemChoices);
                 int itemIndex = useItemChoice.GetChoice() - 1;
                 
-                _player.UseItem(itemIndex);
-                break;
+                return _player.UseItem(itemIndex);
+            default:
+                throw new ArgumentOutOfRangeException();
         }
     }
 
@@ -177,7 +183,27 @@ public class Game
     {
         for (int i = 0; i < enemies.Count; i++)
         {
+            var enemy = enemies[i];
             
+            
+            int rolledValue = random.Next(10);
+
+            switch (rolledValue)
+            {
+                case 0: // Attack ally (10%)
+                    int enemyIndex = random.Next(enemies.Count);
+                    enemy.Attack(enemies[enemyIndex]);
+                    
+                    if(enemy.IsDead)
+                        enemies.RemoveAt(enemyIndex);
+                    break;
+                case 1: // Do nothing (10%)
+                    TextHandler.PrettyWrite($"{enemy.Name} skips their turn.", TextHandler.TextType.Description);
+                    break;
+                default: // Attack player (80%)
+                    enemy.Attack(_player);
+                    break;
+            }
         }
     }
 }

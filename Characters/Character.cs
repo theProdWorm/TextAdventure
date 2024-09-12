@@ -10,16 +10,23 @@ public abstract class Character(string name, int health)
 
     private readonly int _maxHealth = health;
     private int _currentHealth = health;
-    protected Weapon _weapon = WeaponFactory.DefaultWeapon;
-    protected Armor _armor = ArmorFactory.DefaultArmor;
+    private Weapon _weapon = WeaponFactory.DefaultWeapon;
+    private Armor _armor = ArmorFactory.DefaultArmor;
 
+    public bool IsDead => _currentHealth <= 0;
+    
+    /// <returns>Whether the target is still alive</returns>
     public void Attack(Character target)
     {
-        TextHandler.PrettyWrite($"{Name} is trying to attack {target.Name} using {_weapon.Name}!");
+        TextHandler.PrettyWrite(
+            $"{Name} is trying to attack {(target == this ? "itself" :target.Name)} using {_weapon.Name}!",
+            TextHandler.TextType.Description);
         Thread.Sleep(400);
+        
         target.ReceiveAttack(_weapon.Damage, _weapon.Accuracy);
     }
     
+    /// <returns>Whether the character is still alive</returns>
     private void ReceiveAttack(int damage, float accuracy)
     {
         float effectiveAccuracy = accuracy * (1 - _armor.Evasion);
