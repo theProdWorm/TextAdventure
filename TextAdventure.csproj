@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Events\" />
+    <Folder Include="States\" />
   </ItemGroup>
 
 </Project>

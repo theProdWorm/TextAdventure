@@ -1,7 +1,9 @@
 using TextAdventure.Characters;
 using TextAdventure.Factories;
 using TextAdventure.Items.Armors;
+using TextAdventure.Items.Items;
 using TextAdventure.Items.Weapons;
+using TextAdventure.States;
 using TextAdventure.World;
 
 namespace TextAdventure;
@@ -87,7 +89,18 @@ public class Game
 
     private void HandleCombat()
     {
-        
+        List<Character> enemies = _floors[_currentFloorIndex].CurrentRoom.Enemies;
+
+        bool isPlayerTurn = true;
+        while (enemies.Count > 0)
+        {
+            if (isPlayerTurn)
+                CombatPlayerTurn(enemies);
+            else
+                CombatEnemyTurn(enemies);
+
+            isPlayerTurn = !isPlayerTurn;
+        }
     }
 
     private void HandleShop()
@@ -112,5 +125,59 @@ public class Game
         string description = "Before you are multiple pathways, each leading to a different room. Which path do you choose?";
         
         //ChoiceEvent choice = new(description, )
+    }
+
+    private void CombatPlayerTurn(List<Character> enemies)
+    {
+        const string combatDescription = "You are in combat! What is your next move?";
+        string[] combatChoices = ["Attack", "Use item"];
+
+        ChoiceEvent combatChoice = new(combatDescription, combatChoices);
+        int choice = combatChoice.GetChoice();
+
+        switch (choice)
+        {
+            case 1:
+                const string attackDescription = "Who do you want to attack?";
+                string[] attackChoices = new string[enemies.Count];
+
+                for (int i = 0; i < enemies.Count; i++)
+                {
+                    attackChoices[i] = enemies[i].GetCombatPrint();
+                }
+
+                ChoiceEvent attackChoice = new(attackDescription, attackChoices);
+                int enemyIndex = attackChoice.GetChoice() - 1;
+                
+                _player.Attack(enemies[enemyIndex]);
+                break;
+            case 2:
+                const string useItemDescription = "What item do you want to use?";
+                string[] useItemChoices = new string[_player.Inventory.Length];
+
+                for (int i = 0; i < _player.Inventory.Length; i++)
+                {
+                    Item? item = _player.Inventory[i];
+                    
+                    if(item == null)
+                        continue;
+
+                    useItemChoices[i] = item.Name;
+                }
+                
+                ChoiceEvent useItemChoice = new(useItemDescription, useItemChoices);
+                int itemIndex = useItemChoice.GetChoice() - 1;
+                
+                _player.UseItem(itemIndex);
+                break;
+        }
+    }
+
+    private void CombatEnemyTurn(List<Character> enemies)
+    {
+        for (int i = 0; i < enemies.Count; i++)
+        {
+            
+        }
     }
 }

@@ -14,6 +14,7 @@ public class WeaponRoom(LootHoard lootHoard) : Room(lootHoard)
         if (_lootHoard.Item is not Weapon lootWeapon)
             throw new Exception();
 
+        
         lootWeapon.Print();
         
         const string description = "Switch your equipped weapon?";

@@ -28,6 +28,8 @@ public class ChoiceEvent(string description, string[] choices)
             }
         }
 
+        Console.Clear();
+        
         return choice;
     }
 }

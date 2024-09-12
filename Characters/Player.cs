@@ -6,8 +6,8 @@ using TextAdventure.Items;
 public class Player(string name, int health) : Character(name, health)
 {
     public int Gold { get; private set; }
-    
-    private List<Item> _items = new(2);
+
+    public readonly Item?[] Inventory = new Item?[3];
 
     public void ItemPurchased()
     {
@@ -21,14 +21,14 @@ public class Player(string name, int health) : Character(name, health)
     
     public void UseItem(int index)
     {
-        var item = _items[index];
-        switch (item.Type)
+        var item = Inventory[index];
+        switch (item!.Type)
         {
             case Item.ItemType.Healing:
                 Heal((item as HealthPotion)!.HealAmount);
                 break;
             case Item.ItemType.Key:
-                TextHandler.PrettyWrite("What would that do?", isLastLine: true);
+                TextHandler.PrettyWrite("The enemy doesn't seem to have a keyhole!", isLastLine: true);
                 break;
             default:
                 TextHandler.PrettyWrite("Item is not usable.", TextHandler.TextType.Bad, true);
