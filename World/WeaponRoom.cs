@@ -1,21 +1,34 @@
 using TextAdventure.Characters;
+using TextAdventure.Items.Loot;
 using TextAdventure.Items.Weapons;
+using TextAdventure.States;
 
 namespace TextAdventure.World;
 
-public class WeaponRoom : Room
+public class WeaponRoom(LootHoard lootHoard) : Room(lootHoard)
 {
-    private Weapon _rewardWeapon;
-
-    public WeaponRoom(Weapon rewardWeapon, int rewardGold) : base(rewardGold)
-    {
-        _rewardWeapon = rewardWeapon;
-    }
-
     public override void RewardPlayer(Player player)
     {
         base.RewardPlayer(player);
-        // TODO: Prompt the player to pick up their reward or discard it
-        // TODO: If they want it, give the player their cool new weapon
+
+        if (_lootHoard.Item is not Weapon lootWeapon)
+            throw new Exception();
+
+        lootWeapon.Print();
+        
+        const string description = "Switch your equipped weapon?";
+        string[] choices = ["Yes (discard equipped weapon)", "No"];
+        ChoiceEvent weaponChoice = new(description, choices);
+        
+        int choice = weaponChoice.GetChoice();
+
+        switch (choice)
+        {
+            case 1:
+                player.Equip(lootWeapon);
+                break;
+            case 2:
+                break;
+        }
     }
 }

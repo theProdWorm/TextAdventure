@@ -5,7 +5,7 @@ public class ChoiceEvent(string description, string[] choices)
     private readonly string _description = description;
     private readonly string[] _choices = choices;
 
-    private int GetChoice()
+    public int GetChoice()
     {
         TextHandler.PrettyWrite(_description + "\n", TextHandler.TextType.Description);
         for (int i = 0; i < _choices.Length; i++)

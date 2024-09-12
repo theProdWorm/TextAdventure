@@ -103,9 +103,10 @@ public class Game
         int amountOfRooms = random.Next(3) + 2;
         List<Room> rooms = new List<Room>();
 
+        // Create rooms to choose from
         for (int i = 0; i < amountOfRooms; i++)
         {
-            
+            Room room = _floors[_currentFloorIndex].GenerateRoom();
         }
         
         string description = "Before you are multiple pathways, each leading to a different room. Which path do you choose?";

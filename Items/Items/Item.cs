@@ -7,11 +7,14 @@ public abstract class Item(string name)
     public enum ItemType
     {
         Healing,
-        Key,
-        Weapon,
-        Armor
+        Key
     }
     
     public string Name { get; } = name;
     public ItemType Type { get; } = ItemType.Healing;
+
+    public virtual void Print()
+    {
+        TextHandler.PrettyWrite(Name, TextHandler.TextType.Description);
+    }
 }

@@ -1,23 +1,24 @@
+using System.ComponentModel;
 using TextAdventure.Characters;
+using TextAdventure.Items.Loot;
 
 namespace TextAdventure.World;
 
-public class Room
+public abstract class Room
 {
-    public List<Character> Enemies { get; private set; }
+    public List<Character> Enemies { get; protected set; }
 
-    private readonly int _rewardGold;
-
-    public Room(int rewardGold)
+    protected LootHoard _lootHoard;
+    
+    public Room(LootHoard lootHoard)
     {
-        // TODO: Generate gold instead?
+        _lootHoard = lootHoard;
         
         Enemies = new List<Character>();
-        _rewardGold = rewardGold;
     }
 
     public virtual void RewardPlayer(Player player)
     {
-        player.AddGold(_rewardGold);
+        player.AddGold(_lootHoard.Gold);
     }
 }

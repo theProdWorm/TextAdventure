@@ -2,15 +2,15 @@ namespace TextAdventure.Factories;
 
 public abstract class Factory
 {
-    protected T GetRandomElementByWeight<T>(List<WeightedElement<T>> list)
+    protected T GetRandomElementByWeight<T> (in List<WeightedElement<T>> list)
     {
-        list = list.OrderByDescending(x => x.Weight).ToList();
+        var sortedList = list.OrderByDescending(x => x.Weight).ToList();
         
-        int sum = list.Sum(x => x.Weight);
+        int sum = sortedList.Sum(x => x.Weight);
         int rolledValue = Game.random.Next(sum);
 
         int currentValue = 0;
-        foreach (var element in list)
+        foreach (var element in sortedList)
         {
             if(currentValue + element.Weight > rolledValue)
                 return element.Element;
@@ -18,6 +18,7 @@ public abstract class Factory
             currentValue += element.Weight;
         }
         
-        return list.Last().Element;
+        // If loop did not return, we are on the last element
+        return sortedList.Last().Element;
     }
 }

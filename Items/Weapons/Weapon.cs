@@ -12,4 +12,13 @@ public class Weapon(WeaponComponent prefix, WeaponComponent weaponType, WeaponCo
     public new string Name => $"{prefix.Name} {weaponType.Name} of {suffix.Name}";
     public int Damage => prefix.Damage + weaponType.Damage + suffix.Damage;
     public float Accuracy => prefix.Accuracy + weaponType.Accuracy + suffix.Accuracy;
+    
+    public override void Print()
+    {
+        TextHandler.PrettyWrite(Name + "\n", TextHandler.TextType.Description);
+        TextHandler.PrettyWrite(@$"Stats:
+Damage: {Damage}
+Accuracy: {Accuracy}
+", TextHandler.TextType.Good);
+    }
 }

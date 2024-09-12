@@ -12,4 +12,13 @@ public class Armor(ArmorComponent prefix, ArmorComponent armorType, ArmorCompone
     public new string Name => $"{_prefix.Name} {_armorType.Name} of {_suffix.Name}";
     public int Health => _prefix.Health + _armorType.Health + _suffix.Health;
     public float Evasion => _prefix.Evasion + _armorType.Evasion + _suffix.Evasion;
+
+    public override void Print()
+    {
+        TextHandler.PrettyWrite(Name + "\n", TextHandler.TextType.Description);
+        TextHandler.PrettyWrite(@$"Stats:
+Health: {Health}
+Evasion: {Evasion}
+", TextHandler.TextType.Good);
+    }
 }

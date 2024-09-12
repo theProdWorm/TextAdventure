@@ -7,11 +7,11 @@ namespace TextAdventure.World;
 public class Floor
 {
     #region FACTORIES
-    public WeaponFactory WeaponFactory { get; }
-    public ArmorFactory ArmorFactory { get; }
-    public EnemyFactory EnemyFactory { get; }
-    public RoomFactory RoomFactory { get; }
-    public LootFactory LootFactory { get; }
+    private WeaponFactory _weaponFactory { get; }
+    private ArmorFactory _armorFactory { get; }
+    private EnemyFactory _enemyFactory { get; }
+    private RoomFactory _roomFactory { get; }
+    private LootFactory _lootFactory { get; }
     #endregion FACTORIES
 
     private List<Room> _rooms = [];
@@ -19,20 +19,19 @@ public class Floor
 
     public Floor(WeaponFactory weaponFactory, ArmorFactory armorFactory, EnemyFactory enemyFactory)
     {
-        WeaponFactory = weaponFactory;
-        ArmorFactory = armorFactory;
-        EnemyFactory = enemyFactory;
+        _weaponFactory = weaponFactory;
+        _armorFactory = armorFactory;
+        _enemyFactory = enemyFactory;
         
-        LootFactory = new LootFactory(ArmorFactory, WeaponFactory);
+        _lootFactory = new LootFactory(_armorFactory, _weaponFactory);
+        // TODO: Register item loot
         
-        RoomFactory = new RoomFactory(EnemyFactory, LootFactory);
+        _roomFactory = new RoomFactory(_enemyFactory, _lootFactory);
+        // TODO: Register room archetypes
+        
     }
 
     public Room CurrentRoom => _rooms[_currentRoomIndex];
 
-    public Room GenerateRoom()
-    {
-        throw new NotImplementedException();
-        
-    }
+    public Room GenerateRoom() => _roomFactory.GenerateRoom();
 }

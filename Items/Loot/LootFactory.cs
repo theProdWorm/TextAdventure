@@ -43,4 +43,12 @@ public class LootFactory(ArmorFactory armorFactory, WeaponFactory weaponFactory)
 
         return loot;
     }
+
+    public LootHoard GenerateGoldLoot()
+    {
+        int gold = Game.random.Next(50, 80);
+        LootHoard loot = new(gold);
+
+        return loot;
+    }
 }
