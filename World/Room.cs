@@ -29,7 +29,7 @@ public abstract class Room
             choices[i] = _doors[i].ToString();
         }
         ChoiceEvent choiceEvent = new ChoiceEvent($"Facing you are {_doors.Count} doors. Which will you enter? ", choices);
-        while (!_doors[choiceEvent.GetChoice() - 1].TryEnter()) {}
+        while (!_doors[choiceEvent.GetChoice()].TryEnter()) {}
     }
     
     public new abstract string ToString();

@@ -34,6 +34,8 @@ public class CombatRoom : Room
             Console.Clear();
         }
         
+        player.RecieveReward(_lootHoard);
+        
         ChooseDoor();
     }
     
@@ -48,7 +50,7 @@ public class CombatRoom : Room
         
         switch (choice)
         {
-            case 1:
+            case 0:
                 const string attackDescription = "Who do you want to attack?";
                 string[] attackChoices = new string[enemies.Count];
 
@@ -58,7 +60,7 @@ public class CombatRoom : Room
                 }
 
                 ChoiceEvent attackChoice = new(attackDescription, attackChoices);
-                int enemyIndex = attackChoice.GetChoice() - 1;
+                int enemyIndex = attackChoice.GetChoice();
                 
                 player.Attack(enemies[enemyIndex]);
 
@@ -66,7 +68,7 @@ public class CombatRoom : Room
                     enemies.RemoveAt(enemyIndex);
                 
                 return true;
-            case 2:
+            case 1:
                 if (player.IsInventoryEmpty())
                 {
                     TextHandler.PrettyWrite("You have no items!\n", TextHandler.TextType.Bad);
@@ -80,7 +82,7 @@ public class CombatRoom : Room
                 //useItemChoices = (from item in _player.Inventory select item.Name).ToList();
                 
                 ChoiceEvent useItemChoice = new(useItemDescription, useItemChoices.ToArray());
-                int itemIndex = useItemChoice.GetChoice() - 1;
+                int itemIndex = useItemChoice.GetChoice();
                 
                 return player.UseItem(itemIndex);
             default:

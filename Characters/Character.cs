@@ -47,7 +47,7 @@ public class Character
             _currentHealth -= damage;
             TextHandler.PrettyWrite(
                 $"{Name} got hit for {damage} damage!" +
-                (IsDead ? $"\n {Name} died. \n" : $" They now have {_currentHealth} health.\n"),
+                (IsDead ? $"\n{Name} died. \n" : $" They now have {_currentHealth} health.\n"),
                 TextHandler.TextType.Bad);
         }
         else

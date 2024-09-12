@@ -2,7 +2,7 @@ namespace TextAdventure;
 
 public static class TextHandler
 {
-    private static readonly int TextDelay = 40;
+    private static readonly int TextDelay = 30;
 
     public enum TextType
     {

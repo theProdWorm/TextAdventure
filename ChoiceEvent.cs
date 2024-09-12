@@ -4,6 +4,19 @@ public class ChoiceEvent(string description, string[] choices)
 {
     private readonly string _description = description;
     private readonly string[] _choices = choices;
+    
+    private List<ConsoleKey> _keybinds = [
+        ConsoleKey.D1,
+        ConsoleKey.D2, 
+        ConsoleKey.D3, 
+        ConsoleKey.D4, 
+        ConsoleKey.D5, 
+        ConsoleKey.D6, 
+        ConsoleKey.D7, 
+        ConsoleKey.D8, 
+        ConsoleKey.D9, 
+        ConsoleKey.D0, 
+    ];
 
     public int GetChoice()
     {
@@ -24,11 +37,17 @@ public class ChoiceEvent(string description, string[] choices)
         int choice = -1;
         while (!isValidInput)
         {
-            isValidInput = int.TryParse(Console.ReadLine(), out choice) && choice <= _choices.Length && choice > 0;
+            ConsoleKey input = Console.ReadKey().Key;
+            if (_keybinds.Contains(input))
+            {
+                choice = _keybinds.IndexOf(input);
+                if (choice >= 0 && choice < _choices.Length)
+                    isValidInput = true;
+            }
 
             if (!isValidInput)
             {
-                TextHandler.PrettyWrite("Invalid input.", TextHandler.TextType.Bad, true);
+                TextHandler.PrettyWrite($"Invalid input. ({input})", TextHandler.TextType.Bad, true);
             }
         }
 

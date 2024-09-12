@@ -10,7 +10,7 @@ public abstract class Item(string name)
         Key
     }
     
-    public string Name { get; } = name;
+    public string Name { get; } = name.Trim();
     public ItemType Type { get; } = ItemType.Healing;
 
     public virtual void Print()

@@ -74,7 +74,7 @@ public class Game
         
         InstantiateFloors(roomsPerFloor);
         
-        _player = new Player(playerName, 10, 
+        _player = new Player(playerName, 20, 
                             _weaponFactory1.GenerateWeapon("Rusty", "Sword", "Clumsy"), 
                             _armorFactory1.GenerateArmor("Rusty", "Chain", "Clumsy"));
         
