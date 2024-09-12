@@ -1,5 +1,6 @@
 using TextAdventure.Items.Loot;
 using TextAdventure.World;
+using TextAdventure.Characters;
 
 namespace TextAdventure.Factories;
 
@@ -8,17 +9,28 @@ public class RoomFactory(EnemyFactory enemyFactory, LootFactory lootFactory) : F
     private EnemyFactory _enemyFactory = enemyFactory;
     private LootFactory _lootFactory = lootFactory;
     
-    private Dictionary<string, Room> _roomArchetypes = [];
-    
-    public void RegisterRoomArchetype(string index, Room room)
+    public Room GenerateCombatRoom(int enemyCount)
     {
-        _roomArchetypes.Add(index, room);
-    }
-    
-    public Room GenerateRoom()
-    {
-        throw new NotImplementedException();
         // TODO: Generate type of room
         // TODO: If it's a combat room, generate enemies and loot
+        LootHoard loot = _lootFactory.GenerateLoot();
+        
+        List<Character> enemies = new List<Character>();
+        for (int i = 0; i < enemyCount; i++)
+        {
+            enemies.Add(_enemyFactory.GenerateEnemy());
+        }
+
+        return new CombatRoom(loot, enemies);
+    }
+
+    public Room GenerateShopRoom()
+    {
+        throw new NotImplementedException();
+    }
+
+    public Room GenerateBonusRoom()
+    {
+        throw new NotImplementedException();
     }
 }
