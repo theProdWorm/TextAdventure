@@ -2,6 +2,7 @@ using TextAdventure.Characters;
 using TextAdventure.Factories;
 using TextAdventure.Items.Armors;
 using TextAdventure.Items.Items;
+using TextAdventure.Items.Loot;
 using TextAdventure.Items.Weapons;
 using TextAdventure.States;
 using TextAdventure.World;
@@ -36,7 +37,7 @@ public class Game
     private bool _isGameRunning = true;
     
     private Action _currentState;
-
+    
     public Game(string playerName, int floors, int roomsPerFloor)
     {
         InstantiateWeaponLists();
@@ -48,8 +49,37 @@ public class Game
         _player = new Player(playerName, 10, 
                             _weaponFactory1.GenerateWeapon("Rusty", "Sword", "Clumsy"), 
                             _armorFactory1.GenerateArmor("Rusty", "Chain", "Clumsy"));
+
+        LootHoard testLoot = new(
+            10,
+            _weaponFactory1.GenerateWeapon("Blunt", "Sword", "Unwieldy")
+        );
+
+        var testRoom = new WeaponRoom(testLoot);
+
+        List<Character> enemyList = new();
         
-        _currentState = HandlePickingRoom;
+        enemyList.Add(new("Mind Goblin",
+            1, 
+            _weaponFactory1.GenerateWeapon(),
+            _armorFactory1.GenerateArmor()));
+        enemyList.Add(new("Ogre",
+            5,
+            _weaponFactory1.GenerateWeapon(),
+            _armorFactory1.GenerateArmor()));
+        enemyList.Add(new("Lucario", 
+            3, 
+            _weaponFactory1.GenerateWeapon(), 
+            _armorFactory1.GenerateArmor()));
+        
+        testRoom.Populate(enemyList, 2);
+        
+        Floor testFloor = new Floor();
+        testFloor.AddRoom(testRoom);
+        
+        _floors.Add(testFloor);
+        
+        _currentState = HandleCombat;
     }
     
     public void Loop()
@@ -74,6 +104,9 @@ public class Game
                 CombatEnemyTurn(enemies);
 
             isPlayerTurn = !isPlayerTurn;
+            
+            Thread.Sleep(1000);
+            Console.Clear();
         }
     }
 
@@ -104,12 +137,12 @@ public class Game
     /// <returns>Whether the action taken should end the turn</returns>
     private bool CombatPlayerTurn(ref List<Character> enemies)
     {
-        const string combatDescription = "You are in combat! What is your next move?";
+        const string combatDescription = "It's your turn! What is your next move?";
         string[] combatChoices = ["Attack", "Use item"];
 
         ChoiceEvent combatChoice = new(combatDescription, combatChoices);
         int choice = combatChoice.GetChoice();
-
+        
         switch (choice)
         {
             case 1:
@@ -131,20 +164,19 @@ public class Game
                 
                 return true;
             case 2:
-                const string useItemDescription = "What item do you want to use?";
-                string[] useItemChoices = new string[_player.Inventory.Length];
-
-                for (int i = 0; i < _player.Inventory.Length; i++)
+                if (_player.IsInventoryEmpty())
                 {
-                    Item? item = _player.Inventory[i];
-                    
-                    if(item == null)
-                        continue;
-
-                    useItemChoices[i] = item.Name;
+                    TextHandler.PrettyWrite("You have no items!\n", TextHandler.TextType.Bad);
+                    return false;
                 }
                 
-                ChoiceEvent useItemChoice = new(useItemDescription, useItemChoices);
+                const string useItemDescription = "What item do you want to use?";
+                List<string> useItemChoices = [];
+                useItemChoices.AddRange(_player.Inventory.OfType<Item>().Select(item => item.Name));
+
+                //useItemChoices = (from item in _player.Inventory select item.Name).ToList();
+                
+                ChoiceEvent useItemChoice = new(useItemDescription, useItemChoices.ToArray());
                 int itemIndex = useItemChoice.GetChoice() - 1;
                 
                 return _player.UseItem(itemIndex);
@@ -172,7 +204,7 @@ public class Game
                         enemies.RemoveAt(enemyIndex);
                     break;
                 case 1: // Do nothing (10%)
-                    TextHandler.PrettyWrite($"{enemy.Name} skips their turn.", TextHandler.TextType.Description);
+                    TextHandler.PrettyWrite($"{enemy.Name} skips their turn.\n", TextHandler.TextType.Description);
                     break;
                 default: // Attack player (80%)
                     enemy.Attack(_player);
@@ -192,9 +224,9 @@ public class Game
         _weaponPrefixes.Add("Sharp", new WeaponComponent("Sharp", 1, 0f));
         _weaponPrefixes.Add("Mighty", new WeaponComponent("Mighty", 2, 0f));
         
-        _weaponTypes.Add("Dagger", new WeaponComponent("Dagger", 3, 0.7f));
-        _weaponTypes.Add("Sword", new WeaponComponent("Sword", 5, 0.5f));
-        _weaponTypes.Add("Hammer", new WeaponComponent("War Hammer", 7, 0.3f));
+        _weaponTypes.Add("Dagger", new WeaponComponent("Dagger", 3, 1.0f));
+        _weaponTypes.Add("Sword", new WeaponComponent("Sword", 5, 0.9f));
+        _weaponTypes.Add("Hammer", new WeaponComponent("War Hammer", 7, 0.7f));
         
         _weaponSuffixes.Add("Clumsy", new WeaponComponent("of Clumsiness", 0, -0.2f));
         _weaponSuffixes.Add("Unwieldy", new WeaponComponent("of Unwieldiness", 0, -0.1f));
@@ -225,7 +257,7 @@ public class Game
     private void InstantiateWeaponFactories()
     {
         _weaponFactory1.RegisterPrefix("Rusty", 5, _weaponPrefixes["Rusty"]);
-        _weaponFactory1.RegisterPrefix("Old", 3, _weaponPrefixes["Old"]);
+        _weaponFactory1.RegisterPrefix("Blunt", 3, _weaponPrefixes["Blunt"]);
         _weaponFactory1.RegisterPrefix("Normal", 2, _weaponPrefixes["Normal"]);
         
         _weaponFactory1.RegisterWeaponType("Dagger", 1, _weaponTypes["Dagger"]);
@@ -238,7 +270,7 @@ public class Game
 
         
         
-        _weaponFactory2.RegisterPrefix("Old", 5, _weaponPrefixes["Old"]);
+        _weaponFactory2.RegisterPrefix("Blunt", 5, _weaponPrefixes["Blunt"]);
         _weaponFactory2.RegisterPrefix("Normal", 3, _weaponPrefixes["Normal"]);
         _weaponFactory2.RegisterPrefix("Sharp", 2, _weaponPrefixes["Sharp"]);
         
@@ -283,7 +315,7 @@ public class Game
         
         _armorFactory2.RegisterPrefix("Old", 5, _armorPrefixes["Old"]);
         _armorFactory2.RegisterPrefix("Normal", 3, _armorPrefixes["Normal"]);
-        _armorFactory2.RegisterPrefix("Craftmans", 2, _armorPrefixes["Craftmans"]);
+        _armorFactory2.RegisterPrefix("Craftsmans", 2, _armorPrefixes["Craftsmans"]);
         
         _armorFactory2.RegisterArmorType("Leather", 1, _armorTypes["Leather"]);
         _armorFactory2.RegisterArmorType("Chain", 1, _armorTypes["Chain"]);
@@ -296,7 +328,7 @@ public class Game
         
         
         _armorFactory3.RegisterPrefix("Normal", 5, _armorPrefixes["Normal"]);
-        _armorFactory3.RegisterPrefix("Craftmans", 3, _armorPrefixes["Craftmans"]);
+        _armorFactory3.RegisterPrefix("Craftsmans", 3, _armorPrefixes["Craftsmans"]);
         _armorFactory3.RegisterPrefix("Mighty", 2, _armorPrefixes["Mighty"]);
         
         _armorFactory3.RegisterArmorType("Leather", 1, _armorTypes["Leather"]);

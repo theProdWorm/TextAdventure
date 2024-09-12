@@ -8,19 +8,20 @@ public class Character
 {
     public string Name { get; }
 
-    private readonly int _maxHealth;
-    public int EffectiveMaxHealth { get => _maxHealth + _armor.Health; }
+    private readonly int _baseMaxHealth;
+    private int EffectiveMaxHealth => _baseMaxHealth + _armor.Health;
     private int _currentHealth;
-    protected Weapon _weapon;
-    protected Armor _armor;
+    private Weapon _weapon;
+    private Armor _armor;
 
     public Character(string name, int health, Weapon weapon, Armor armor)
     {
         Name = name;
-        _maxHealth = health;
-        _currentHealth = EffectiveMaxHealth;
-        _weapon = weapon;
+        _baseMaxHealth = health;
         _armor = armor;
+        _weapon = weapon;
+        
+        _currentHealth = EffectiveMaxHealth;
     }
 
     public bool IsDead => _currentHealth <= 0;
@@ -29,7 +30,7 @@ public class Character
     public void Attack(Character target)
     {
         TextHandler.PrettyWrite(
-            $"{Name} is trying to attack {(target == this ? "itself" :target.Name)} using {_weapon.Name}!",
+            $"{Name} is trying to attack {(target == this ? "itself" :target.Name)} using {_weapon.Name}!\n",
             TextHandler.TextType.Description);
         Thread.Sleep(400);
         
@@ -48,12 +49,12 @@ public class Character
         {
             _currentHealth -= damage;
             TextHandler.PrettyWrite(
-                $"{Name} got hit for {damage} damage! They now have {_currentHealth} health.",
+                $"{Name} got hit for {damage} damage! They now have {_currentHealth} health.\n",
                 TextHandler.TextType.Bad);
         }
         else
         {
-            TextHandler.PrettyWrite($"{Name} evaded the attack!");
+            TextHandler.PrettyWrite($"{Name} evaded the attack!\n");
         }
     }
     
@@ -61,17 +62,17 @@ public class Character
     {
         int realAmountHealed = healAmount;
         
-        if(_currentHealth + healAmount > _maxHealth)
+        if(_currentHealth + healAmount > _baseMaxHealth)
         {
-            realAmountHealed = _maxHealth - _currentHealth;
-            _currentHealth = _maxHealth;
+            realAmountHealed = _baseMaxHealth - _currentHealth;
+            _currentHealth = _baseMaxHealth;
         }
         else
         {
             _currentHealth += healAmount;
         }
         
-        TextHandler.PrettyWrite($"{Name} healed for {realAmountHealed} health!");
+        TextHandler.PrettyWrite($"{Name} healed for {realAmountHealed} health!\n");
     }
 
     public void Equip(Weapon weapon) => _weapon = weapon;
@@ -79,6 +80,8 @@ public class Character
 
     public string GetCombatPrint()
     {
-        return $"{Name}, {_currentHealth} / {_maxHealth} health";
+        return $"{Name}, {_currentHealth} / {EffectiveMaxHealth} health" + 
+               $"\t\tEquipped armor: {_armor.Name}" + 
+               $"\t\tEquipped weapon: {_weapon.Name}";
     }
 }

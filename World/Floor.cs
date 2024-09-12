@@ -31,6 +31,13 @@ public class Floor
         
     }
 
+    public Floor()
+    {
+        
+    }
+
+    public void AddRoom(Room room) => _rooms.Add(room);
+    
     public Room CurrentRoom => _rooms[_currentRoomIndex];
 
     public Room GenerateRoom() => _roomFactory.GenerateRoom();

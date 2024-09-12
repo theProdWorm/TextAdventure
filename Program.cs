@@ -6,6 +6,7 @@ string playerName = Console.ReadLine()!;
 if (String.IsNullOrEmpty(playerName))
     playerName = "Player";
 
+Console.Clear();
 
 Game game = new Game(playerName, 3, 3);
 game.Loop();

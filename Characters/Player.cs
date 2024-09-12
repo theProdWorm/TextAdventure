@@ -11,6 +11,8 @@ public class Player(string name, int health, Weapon weapon, Armor armor) : Chara
 
     public readonly Item?[] Inventory = new Item?[3];
 
+    public bool IsInventoryEmpty() => Inventory.All(x => x == null);
+    
     public void ItemPurchased()
     {
         

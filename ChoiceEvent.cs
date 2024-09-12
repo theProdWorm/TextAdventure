@@ -20,7 +20,7 @@ public class ChoiceEvent(string description, string[] choices)
         int choice = -1;
         while (!isValidInput)
         {
-            isValidInput = int.TryParse(Console.ReadLine(), out choice) && choice < _choices.Length;
+            isValidInput = int.TryParse(Console.ReadLine(), out choice) && choice <= _choices.Length && choice > 0;
 
             if (!isValidInput)
             {
