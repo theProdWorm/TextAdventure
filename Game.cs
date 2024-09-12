@@ -52,6 +52,7 @@ public class Game
 
         LootHoard testLoot = new(
             10,
+            LootType.Weapon,
             _weaponFactory1.GenerateWeapon("Blunt", "Sword", "Unwieldy")
         );
 
@@ -87,6 +88,7 @@ public class Game
         while (_isGameRunning)
         {
             _currentState();
+            
         }
     }
 
@@ -108,8 +110,15 @@ public class Game
             Thread.Sleep(1000);
             Console.Clear();
         }
+
+        _currentState = HandlePickingRoom;
     }
 
+    private void HandleLoot()
+    {
+        
+    }
+    
     private void HandleShop()
     {
         

@@ -2,8 +2,18 @@ using TextAdventure.Items.Items;
 
 namespace TextAdventure.Items.Loot;
 
-public struct LootHoard(int gold, Item? item = null)
+public enum LootType
+{
+    Weapon,
+    Armor,
+    Item,
+    Gold
+}
+
+public struct LootHoard(int gold, LootType type, Item? item = null)
 {
     public int Gold = gold;
     public Item? Item = item;
+    
+    public LootType Type;
 }

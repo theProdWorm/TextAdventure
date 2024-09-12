@@ -49,7 +49,8 @@ public class Character
         {
             _currentHealth -= damage;
             TextHandler.PrettyWrite(
-                $"{Name} got hit for {damage} damage! They now have {_currentHealth} health.\n",
+                $"{Name} got hit for {damage} damage!" +
+                (IsDead ? " They are now dead.\n" : $" They now have {_currentHealth} health.\n"),
                 TextHandler.TextType.Bad);
         }
         else
@@ -81,7 +82,7 @@ public class Character
     public string GetCombatPrint()
     {
         return $"{Name}, {_currentHealth} / {EffectiveMaxHealth} health" + 
-               $"\t\tEquipped armor: {_armor.Name}" + 
-               $"\t\tEquipped weapon: {_weapon.Name}";
+               $"\n\t\tEquipped armor: {_armor.Name}" + 
+               $"\n\t\tEquipped weapon: {_weapon.Name}";
     }
 }

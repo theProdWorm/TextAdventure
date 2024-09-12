@@ -29,7 +29,7 @@ public class LootFactory(ArmorFactory armorFactory, WeaponFactory weaponFactory)
         int gold = Game.random.Next(5, 30);
         Armor armor = _armorFactory.GenerateArmor();
 
-        LootHoard loot = new(gold, armor);
+        LootHoard loot = new(gold, LootType.Armor, armor);
 
         return loot;
     }
@@ -39,7 +39,7 @@ public class LootFactory(ArmorFactory armorFactory, WeaponFactory weaponFactory)
         int gold = Game.random.Next(5, 30);
         Weapon weapon = _weaponFactory.GenerateWeapon();
 
-        LootHoard loot = new(gold, weapon);
+        LootHoard loot = new(gold, LootType.Weapon, weapon);
 
         return loot;
     }
@@ -47,7 +47,7 @@ public class LootFactory(ArmorFactory armorFactory, WeaponFactory weaponFactory)
     public LootHoard GenerateGoldLoot()
     {
         int gold = Game.random.Next(50, 80);
-        LootHoard loot = new(gold);
+        LootHoard loot = new(gold, LootType.Gold);
 
         return loot;
     }

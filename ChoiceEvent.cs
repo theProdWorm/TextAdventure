@@ -11,9 +11,13 @@ public class ChoiceEvent(string description, string[] choices)
         for (int i = 0; i < _choices.Length; i++)
         {
             string choiceText = _choices[i];
-            TextHandler.PrettyWrite($"[{i + 1}] {choiceText}\n",
+            TextHandler.PrettyWrite($"[{i + 1}] {choiceText}",
                 TextHandler.TextType.Option,
-                i == _choices.Length - 1);
+                i == _choices.Length - 1,
+                true);
+            
+            if(i < _choices.Length - 1)
+                Console.WriteLine();
         }
 
         bool isValidInput = false;

@@ -2,7 +2,7 @@ namespace TextAdventure;
 
 public static class TextHandler
 {
-    private static readonly int TextDelay = 45;
+    private static readonly int TextDelay = 40;
 
     public enum TextType
     {
@@ -13,7 +13,7 @@ public static class TextHandler
         Normal
     }
 
-    public static void PrettyWrite(string output, TextType type = TextType.Normal, bool isLastLine = false)
+    public static void PrettyWrite(string output, TextType type = TextType.Normal, bool isLastLine = false, bool printFast = false)
     {
         var color = GetColor(type);
         Console.ForegroundColor = color;
@@ -21,11 +21,20 @@ public static class TextHandler
         if(type == TextType.Option)
             Console.Write('\t');
         
-        foreach (var letter in output)
+        if(printFast)
         {
-            Console.Write(letter);
-            Thread.Sleep(TextDelay);
+            Console.Write(output);
         }
+        else
+        {
+            foreach (var letter in output)
+            {
+                Console.Write(letter);
+                Thread.Sleep(TextDelay);
+            }
+        }
+        
+        Thread.Sleep(500);
         
         Console.ForegroundColor = ConsoleColor.Gray;
         
