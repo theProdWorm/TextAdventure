@@ -19,76 +19,80 @@ public class Floor
     private List<Room> _rooms;
     private bool _generateBonusRoom;
     private int _enemyCounts;
-    public Room CurrentRoom { get => _rooms.Last(); }
+    private Room _currentRoom;
+    public Room CurrentRoom { get => _currentRoom; }
 
     private Action _nextFloor;
     
-    public Floor(WeaponFactory weaponFactory, ArmorFactory armorFactory, EnemyFactory enemyFactory, int rooms, int enemyCounts, Action nextFloor, bool generateBonusRoom = false)
+    public Floor(WeaponFactory weaponFactory, ArmorFactory armorFactory, EnemyFactory enemyFactory, LootFactory lootFactory, int rooms, int enemyCounts, Action nextFloor, bool generateBonusRoom = false)
     {
         _weaponFactory = weaponFactory;
         _armorFactory = armorFactory;
         _enemyFactory = enemyFactory;
-        
-        _lootFactory = new LootFactory(_armorFactory, _weaponFactory);
-        // TODO: Register item loot
-        
-        _roomFactory = new RoomFactory(_enemyFactory, _lootFactory);
-        // TODO: Register room archetypes
+        _lootFactory = lootFactory;
         
         _nRooms = rooms;
         _rooms = [];
         _generateBonusRoom = generateBonusRoom;
         _enemyCounts = enemyCounts;
-        
         _nextFloor = nextFloor;
+        
+        _roomFactory = new RoomFactory(_enemyFactory, _lootFactory, _nextFloor);
+        GenerateRooms();
+        _currentRoom = _rooms.First();
     }
 
-
-    public void PromptRoomChoice()
+    private void GenerateRooms()
     {
-        if (_rooms.Count < _nRooms)
+        int effectiveEnemyCount = _enemyCounts;
+        _rooms.Add(_roomFactory.GenerateCombatRoom(effectiveEnemyCount));
+        for (int i = 1; i < _nRooms; i++)
         {
-            if (_rooms.Count == _nRooms - 1)
-                _enemyCounts++;
-            List<Room> rooms =
-            [
-                _roomFactory.GenerateCombatRoom(_enemyCounts),
-                _roomFactory.GenerateCombatRoom(_enemyCounts)
-            ];
+            if (i == _nRooms - 1)
+            {
+                effectiveEnemyCount++;
+            }
+            Room room1 = _roomFactory.GenerateCombatRoom(effectiveEnemyCount);
+            Room room2 = _roomFactory.GenerateCombatRoom(effectiveEnemyCount);
 
-            ChoiceEvent choiceEvent = new ChoiceEvent("Facing you are two doors. Which room will you enter? ",
-                [rooms[0].ToString(), rooms[1].ToString()]);
-            Room room = rooms[choiceEvent.GetChoice()];
+            Door door1 = new Door(room1, EnterRoom);
+            Door door2 = new Door(room2, EnterRoom);
             
-            _rooms.Add(room);
+            _rooms[^1].AddDoor(door1);
+            _rooms[^1].AddDoor(door2);
+            if (_rooms.Count > 1)
+            {
+                _rooms[^2].AddDoor(door1);
+                _rooms[^2].AddDoor(door2);
+            }
+            _rooms.Add(room1);
+            _rooms.Add(room2);
         }
-        else
+        
+        Room shopRoom = _roomFactory.GenerateShopRoom();
+        Door shopDoor = new Door(shopRoom, EnterRoom);
+        _rooms[^1].AddDoor(shopDoor);
+        _rooms[^2].AddDoor(shopDoor);
+        _rooms.Add(shopRoom);
+
+        Room nextFloorRoom = _roomFactory.GenerateNextFloorRoom();
+        Door nextFloorDoor = new Door(nextFloorRoom, EnterRoom);
+        _rooms[^2].AddDoor(nextFloorDoor);
+        _rooms[^3].AddDoor(nextFloorDoor);
+        _rooms.Add(nextFloorRoom);
+
+        if (_generateBonusRoom)
         {
-            List<Room?> rooms =
-            [
-                _roomFactory.GenerateShopRoom(),
-                null
-            ];
-            List<string> choices = ["This door leads to a shop", "This door leads to the next floor"];
-            if (_generateBonusRoom)
-            {
-                rooms.Add(_roomFactory.GenerateBonusRoom());
-                choices.Add("This locked door leads to a treasure chamber");
-            }
-            
-            
-            ChoiceEvent choiceEvent = new ChoiceEvent(
-                $"Facing you are {rooms.Count} doors. Which door will you enter? ",
-                choices.ToArray());
-            Room? room = rooms[choiceEvent.GetChoice()];
-
-            if (room is null)
-            {
-                _nextFloor();
-                return;
-            }
-            
-            _rooms.Add(room);
+            Room bonusRoom = _roomFactory.GenerateBonusRoom();
+            Door bonusDoor = new Door(bonusRoom, EnterRoom);
+            _rooms[^3].AddDoor(bonusDoor);
+            _rooms[^4].AddDoor(bonusDoor);
+            _rooms.Add(bonusRoom);
         }
+    }
+
+    private void EnterRoom(Room room)
+    {
+        _currentRoom = room;
     }
 }

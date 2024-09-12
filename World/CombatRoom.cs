@@ -1,11 +1,13 @@
 using TextAdventure.Characters;
+using TextAdventure.Items.Items;
 using TextAdventure.Items.Loot;
+using TextAdventure.States;
 
 namespace TextAdventure.World;
 
 public class CombatRoom : Room
 {
-    private readonly List<Character> _enemies;
+    private List<Character> _enemies;
     public List<Character> Enemies { get => _enemies; }
 
     private LootHoard _lootHoard;
@@ -18,8 +20,100 @@ public class CombatRoom : Room
 
     public override void Update(Player player)
     {
-        //TODO: combat logic
-        //TODO: Prompt player to pick up loot
+        bool isPlayerTurn = true;
+        while (_enemies.Count > 0)
+        {
+            if (isPlayerTurn)
+                isPlayerTurn = CombatPlayerTurn(ref _enemies, player);
+            else
+                CombatEnemyTurn(_enemies, player);
+
+            isPlayerTurn = !isPlayerTurn;
+            
+            Thread.Sleep(1000);
+            Console.Clear();
+        }
+        
+        ChooseDoor();
+    }
+    
+    /// <returns>Whether the action taken should end the turn</returns>
+    private bool CombatPlayerTurn(ref List<Character> enemies, Player player)
+    {
+        const string combatDescription = "It's your turn! What is your next move?";
+        string[] combatChoices = ["Attack", "Use item"];
+
+        ChoiceEvent combatChoice = new(combatDescription, combatChoices);
+        int choice = combatChoice.GetChoice();
+        
+        switch (choice)
+        {
+            case 1:
+                const string attackDescription = "Who do you want to attack?";
+                string[] attackChoices = new string[enemies.Count];
+
+                for (int i = 0; i < enemies.Count; i++)
+                {
+                    attackChoices[i] = enemies[i].GetCombatPrint();
+                }
+
+                ChoiceEvent attackChoice = new(attackDescription, attackChoices);
+                int enemyIndex = attackChoice.GetChoice() - 1;
+                
+                player.Attack(enemies[enemyIndex]);
+
+                if(enemies[enemyIndex].IsDead)
+                    enemies.RemoveAt(enemyIndex);
+                
+                return true;
+            case 2:
+                if (player.IsInventoryEmpty())
+                {
+                    TextHandler.PrettyWrite("You have no items!\n", TextHandler.TextType.Bad);
+                    return false;
+                }
+                
+                const string useItemDescription = "What item do you want to use?";
+                List<string> useItemChoices = [];
+                useItemChoices.AddRange(player.Inventory.OfType<Item>().Select(item => item.Name));
+
+                //useItemChoices = (from item in _player.Inventory select item.Name).ToList();
+                
+                ChoiceEvent useItemChoice = new(useItemDescription, useItemChoices.ToArray());
+                int itemIndex = useItemChoice.GetChoice() - 1;
+                
+                return player.UseItem(itemIndex);
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+    }
+
+    private void CombatEnemyTurn(List<Character> enemies, Player player)
+    {
+        for (int i = 0; i < enemies.Count; i++)
+        {
+            var enemy = enemies[i];
+            
+            
+            int rolledValue = Game.random.Next(10);
+
+            switch (rolledValue)
+            {
+                case 0: // Attack ally (10%)
+                    int enemyIndex = Game.random.Next(enemies.Count);
+                    enemy.Attack(enemies[enemyIndex]);
+                    
+                    if(enemy.IsDead)
+                        enemies.RemoveAt(enemyIndex);
+                    break;
+                case 1: // Do nothing (10%)
+                    TextHandler.PrettyWrite($"{enemy.Name} skips their turn.\n", TextHandler.TextType.Description);
+                    break;
+                default: // Attack player (80%)
+                    enemy.Attack(player);
+                    break;
+            }
+        }
     }
 
     public override string ToString()

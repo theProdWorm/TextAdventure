@@ -23,6 +23,6 @@ Evasion: {Evasion}
 
     public override string ToString()
     {
-        throw new NotImplementedException();
+        return $"{Name} [+{Health} Health] [{Evasion} Evasion]";
     }
 }

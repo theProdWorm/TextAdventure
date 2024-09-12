@@ -6,19 +6,18 @@ using TextAdventure.Items.Weapons;
 
 namespace TextAdventure.Items.Loot;
 
-public class LootFactory(ArmorFactory armorFactory, WeaponFactory weaponFactory) : Factory
+public class LootFactory(WeaponFactory weaponFactory, ArmorFactory armorFactory) : Factory
 {
-    
-    private ArmorFactory _armorFactory = armorFactory;
     private WeaponFactory _weaponFactory = weaponFactory;
+    private ArmorFactory _armorFactory = armorFactory;
     
-    private readonly List<Item> _items = [];
+    private readonly Dictionary<string, WeightedElement<Item>> _items = [];
 
     private readonly List<WeightedElement<LootType>> _lootWeights = [];
 
     public void RegisterItem(string key, int weight, Item item)
     {
-        throw new NotImplementedException();
+        _items.Add(key, new WeightedElement<Item>(weight, item));
     }
 
     public void RegisterLootWeight(int weight, LootType lootType)
@@ -31,6 +30,7 @@ public class LootFactory(ArmorFactory armorFactory, WeaponFactory weaponFactory)
         LootType lootType = GetRandomElementByWeight(_lootWeights);
         Item? item = null;
 
+        int gold = Game.random.Next(5, 30);
         switch (lootType)
         {
             case LootType.Weapon:
@@ -40,50 +40,12 @@ public class LootFactory(ArmorFactory armorFactory, WeaponFactory weaponFactory)
                 item = _armorFactory.GenerateArmor();
                 break;
             case LootType.Item:
-                //TODO: Get random item from _items (make weighted)
+                item = GetRandomElementByWeight(_items.Values.ToList());
                 break;
             default:
+                gold += Game.random.Next(5, 30);
                 break;
         }
-        int gold = Game.random.Next(5, 30);
         return new LootHoard(gold, lootType, item);
     }
-    /*public LootHoard GenerateItemLoot()
-    {
-        int gold = Game.random.Next(5, 30);
-        
-        // TODO: Generate a random item (or assortment of items)
-        
-        //LootHoard loot = new(gold, item)
-        
-        throw new NotImplementedException();
-    }
-
-    public LootHoard GenerateArmorLoot()
-    {
-        int gold = Game.random.Next(5, 30);
-        Armor armor = _armorFactory.GenerateArmor();
-
-        LootHoard loot = new(gold, LootType.Armor, armor);
-
-        return loot;
-    }
-
-    public LootHoard GenerateWeaponLoot()
-    {
-        int gold = Game.random.Next(5, 30);
-        Weapon weapon = _weaponFactory.GenerateWeapon();
-
-        LootHoard loot = new(gold, LootType.Weapon, weapon);
-
-        return loot;
-    }
-
-    public LootHoard GenerateGoldLoot()
-    {
-        int gold = Game.random.Next(50, 80);
-        LootHoard loot = new(gold, LootType.Gold);
-
-        return loot;
-    }*/
 }

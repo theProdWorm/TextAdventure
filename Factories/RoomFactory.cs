@@ -4,10 +4,12 @@ using TextAdventure.Characters;
 
 namespace TextAdventure.Factories;
 
-public class RoomFactory(EnemyFactory enemyFactory, LootFactory lootFactory) : Factory
+public class RoomFactory(EnemyFactory enemyFactory, LootFactory lootFactory, Action nextFloor) : Factory
 {
     private EnemyFactory _enemyFactory = enemyFactory;
     private LootFactory _lootFactory = lootFactory;
+
+    private Action _nextFloor = nextFloor;
     
     public Room GenerateCombatRoom(int enemyCount)
     {
@@ -26,11 +28,16 @@ public class RoomFactory(EnemyFactory enemyFactory, LootFactory lootFactory) : F
 
     public Room GenerateShopRoom()
     {
-        throw new NotImplementedException();
+        return new ShopRoom();
     }
 
     public Room GenerateBonusRoom()
     {
-        throw new NotImplementedException();
+        return new BonusRoom();
+    }
+
+    public Room GenerateNextFloorRoom()
+    {
+        return new NextFloorRoom(_nextFloor);
     }
 }

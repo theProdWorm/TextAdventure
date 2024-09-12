@@ -8,5 +8,5 @@ if (String.IsNullOrEmpty(playerName))
 
 Console.Clear();
 
-Game game = new Game(playerName, 3, 3);
-game.Loop();
+Game game = new Game(playerName, 3);
+game.Run();

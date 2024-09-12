@@ -2,7 +2,7 @@ using TextAdventure.Items.Items;
 
 namespace TextAdventure.Items.Weapons;
 
-public class Weapon(WeaponComponent prefix, WeaponComponent weaponType, WeaponComponent suffix) : Item($"{prefix.Name} {weaponType.Name} of {suffix.Name}")
+public class Weapon(WeaponComponent prefix, WeaponComponent weaponType, WeaponComponent suffix) : Item($"{prefix.Name} {weaponType.Name} {suffix.Name}")
 {
     private readonly WeaponComponent _prefix = prefix;
     private readonly WeaponComponent _weaponType = weaponType;
@@ -22,6 +22,6 @@ Accuracy: {Accuracy}
 
     public override string ToString()
     {
-        return $"{Name} [{Damage} DMG] [{Accuracy} ACC]";
+        return $"{Name} [{Damage} Damage] [{Accuracy} Accuracy]";
     }
 }

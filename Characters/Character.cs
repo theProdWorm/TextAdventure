@@ -9,19 +9,16 @@ public class Character
     public string Name { get; }
 
     private readonly int _baseMaxHealth;
-    private int EffectiveMaxHealth => _baseMaxHealth + _armor.Health;
+    private int EffectiveMaxHealth => _baseMaxHealth + _armor?.Health ?? _baseMaxHealth;
     private int _currentHealth;
-    private Weapon _weapon;
-    private Armor _armor;
+    private Weapon? _weapon;
+    private Armor? _armor;
 
-    public Character(string name, int health, Weapon weapon, Armor armor)
+    public Character(string name, int health)
     {
         Name = name;
         _baseMaxHealth = health;
-        _armor = armor;
-        _weapon = weapon;
-        
-        _currentHealth = EffectiveMaxHealth;
+        _currentHealth = health;
     }
 
     public bool IsDead => _currentHealth <= 0;
@@ -50,7 +47,7 @@ public class Character
             _currentHealth -= damage;
             TextHandler.PrettyWrite(
                 $"{Name} got hit for {damage} damage!" +
-                (IsDead ? " They are now dead.\n" : $" They now have {_currentHealth} health.\n"),
+                (IsDead ? $"\n {Name} died. \n" : $" They now have {_currentHealth} health.\n"),
                 TextHandler.TextType.Bad);
         }
         else
@@ -77,12 +74,20 @@ public class Character
     }
 
     public void Equip(Weapon weapon) => _weapon = weapon;
-    public void Equip(Armor armor) => _armor = armor;
+    public void Equip(Armor armor)
+    {
+        int damageTaken = 0;
+        if (_currentHealth < _baseMaxHealth)
+            damageTaken = _baseMaxHealth - _currentHealth;
+        
+        _armor = armor;
+        _currentHealth = EffectiveMaxHealth - damageTaken;
+    }
 
     public string GetCombatPrint()
     {
         return $"{Name}, {_currentHealth} / {EffectiveMaxHealth} health" + 
-               $"\n\t\tEquipped armor: {_armor.Name}" + 
-               $"\n\t\tEquipped weapon: {_weapon.Name}";
+               $"\n\t\tEquipped weapon: {_weapon.Name}" +
+               $"\n\t\tEquipped armor: {_armor.Name}";
     }
 }

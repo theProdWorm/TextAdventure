@@ -1,16 +1,23 @@
 using TextAdventure.Items.Armors;
 using TextAdventure.Items.Items;
+using TextAdventure.Items.Loot;
 using TextAdventure.Items.Weapons;
 
 namespace TextAdventure.Characters;
 using TextAdventure.Items;
 
-public class Player(string name, int health, Weapon weapon, Armor armor) : Character(name, health, weapon, armor)
+public class Player : Character
 {
     public int Gold { get; private set; }
 
     public readonly Item?[] Inventory = new Item?[3];
 
+    public Player(string name, int health, Weapon weapon, Armor armor) : base(name, health)
+    {
+        Equip(weapon);
+        Equip(armor);
+    }
+    
     public bool IsInventoryEmpty() => Inventory.All(x => x == null);
     
     public void ItemPurchased()
@@ -42,5 +49,10 @@ public class Player(string name, int health, Weapon weapon, Armor armor) : Chara
                 return false;
                 break;
         }
+    }
+
+    public void RecieveReward(LootHoard loot)
+    {
+        
     }
 }
