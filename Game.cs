@@ -177,11 +177,11 @@ public class Game
         _armorTypes.Add("Chain", new ArmorComponent("Chainmail", 5, 0.0f));
         _armorTypes.Add("Plate", new ArmorComponent("Plate Armor", 10, -1.0f));
         
-        _armorSuffixes.Add("Clumsy", new ArmorComponent("of Clumsiness", 0, -0.2f));
-        _armorSuffixes.Add("Unwieldy", new ArmorComponent("of Unwieldiness", 0, -0.1f));
+        _armorSuffixes.Add("Clumsy", new ArmorComponent("of Clumsiness", 0, -0.1f));
+        _armorSuffixes.Add("Unwieldy", new ArmorComponent("of Unwieldiness", 0, -0.05f));
         _armorSuffixes.Add("Normal", new ArmorComponent("", 0, 0f));
-        _armorSuffixes.Add("Swift", new ArmorComponent("of Swiftness", 0, 0.3f));
-        _armorSuffixes.Add("Divine", new ArmorComponent("of Divine Protection", 0, 0.5f));
+        _armorSuffixes.Add("Swift", new ArmorComponent("of Swiftness", 0, 0.2f));
+        _armorSuffixes.Add("Divine", new ArmorComponent("of Divine Protection", 0, 0.4f));
     }
 
     private void InstantiateWeaponFactories()
@@ -329,7 +329,8 @@ public class Game
         _lootFactory2.RegisterLootWeight(2, LootType.Item);
         _lootFactory2.RegisterLootWeight(2, LootType.Gold);
         
-        _lootFactory3.RegisterItem("HealthPotion", 8, _items["HealthPotion"]);
+        _lootFactory3.RegisterItem("HealthPotion", 5, _items["HealthPotion"]);
+        _lootFactory3.RegisterItem("GreaterHealthPotion", 5, _items["GreaterHealthPotion"]);
         
         _lootFactory3.RegisterLootWeight(3, LootType.Weapon);
         _lootFactory3.RegisterLootWeight(3, LootType.Armor);
