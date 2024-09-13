@@ -11,8 +11,8 @@ public class Character
     private readonly int _baseMaxHealth;
     private int EffectiveMaxHealth => _baseMaxHealth + _armor?.Health ?? _baseMaxHealth;
     private int _currentHealth;
-    private Weapon? _weapon;
-    private Armor? _armor;
+    protected Weapon? _weapon;
+    protected Armor? _armor;
 
     public Character(string name, int health)
     {
