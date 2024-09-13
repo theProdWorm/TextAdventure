@@ -149,4 +149,12 @@ public class Player : Character
         TextHandler.PrettyWrite($"Placed {item.ToString()} in inventory! \n");
         return true;
     }
+
+    public void PrintStats()
+    {
+        TextHandler.PrettyWrite($@"Health: {_currentHealth} / {EffectiveMaxHealth}
+Equipped Armor: {_armor!.ToString()}
+Equipped Weapon: {_weapon!.ToString()}
+", TextHandler.TextType.Good, printFast: true);
+    }
 }

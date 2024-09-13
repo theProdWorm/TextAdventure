@@ -11,8 +11,8 @@ public class Character
     public string Name { get; }
 
     private readonly int _baseMaxHealth;
-    private int EffectiveMaxHealth => _baseMaxHealth + _armor?.Health ?? _baseMaxHealth;
-    private int _currentHealth;
+    protected int EffectiveMaxHealth => _baseMaxHealth + _armor?.Health ?? _baseMaxHealth;
+    protected int _currentHealth;
     protected Weapon? _weapon;
     protected Armor? _armor;
 
@@ -50,6 +50,10 @@ public class Character
             int realDamage = (int) MathF.Round(damage * deviation * (isCrit ? 2 : 1));
             
             _currentHealth -= realDamage;
+            
+            if(isCrit)
+                TextHandler.PrettyWrite("It's a critical hit!");
+            
             TextHandler.PrettyWrite(
                 $"{Name} got hit for {realDamage} damage!" +
                 (IsDead ? $"\n{Name} died. \n" : $" They now have {_currentHealth} health.\n"),

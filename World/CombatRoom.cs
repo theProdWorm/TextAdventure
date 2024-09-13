@@ -23,8 +23,6 @@ public class CombatRoom : Room
         bool isPlayerTurn = true;
         while (_enemies.Count > 0)
         {
-            
-            
             if (isPlayerTurn)
                 isPlayerTurn = CombatPlayerTurn(ref _enemies, player);
             else
@@ -44,6 +42,8 @@ public class CombatRoom : Room
     /// <returns>Whether the action taken should end the turn</returns>
     private bool CombatPlayerTurn(ref List<Character> enemies, Player player)
     {
+        player.PrintStats();
+        
         const string combatDescription = "It's your turn! What is your next move?";
         string[] combatChoices = ["Attack", "Use item"];
 
@@ -122,6 +122,6 @@ public class CombatRoom : Room
 
     public override string ToString()
     {
-        return $"Clearing this room will grant you {(_lootHoard.Item is not null ? _lootHoard.Item.ToString() : "heaps of gold")}";
+        return $"Reward: {(_lootHoard.Item is not null ? _lootHoard.Item.ToString() : "heaps of gold")}";
     }
 }
