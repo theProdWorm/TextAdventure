@@ -165,7 +165,7 @@ public class Player : Character
                 else
                     choices[i] = Inventory[i].ToString();
             }
-            ChoiceEvent choiceEvent = new ChoiceEvent("Choose a slot to place the item in", choices);
+            ChoiceEvent choiceEvent = new ChoiceEvent($"Choose a slot to place the {item.Name} in", choices);
             while (!TryPlaceInInventory(item, choiceEvent.GetChoice())) {}
         }
     }

@@ -359,7 +359,7 @@ public class Game
 
     private void InstantiateFloors(int roomsPerFloor)
     {
-        Floor floor1 = new Floor(_weaponFactory1, _armorFactory1, _enemyFactory1, _lootFactory1, roomsPerFloor, 1, NextFloor);
+        Floor floor1 = new Floor(_weaponFactory1, _armorFactory1, _enemyFactory1, _lootFactory1, roomsPerFloor, 1, NextFloor, true);
         Floor floor2 = new Floor(_weaponFactory2, _armorFactory2, _enemyFactory2, _lootFactory2, roomsPerFloor, 2, NextFloor, true);
         Floor floor3 = new Floor(_weaponFactory3, _armorFactory3, _enemyFactory3, _lootFactory3, roomsPerFloor, 3, NextFloor);
         _floors.AddRange([floor1, floor2, floor3]);
