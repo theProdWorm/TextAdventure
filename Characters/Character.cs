@@ -10,7 +10,7 @@ public class Character
     
     public string Name { get; }
 
-    private readonly int _baseMaxHealth;
+    protected int _baseMaxHealth;
     protected int EffectiveMaxHealth => _baseMaxHealth + _armor?.Health ?? _baseMaxHealth;
     protected int _currentHealth;
     protected Weapon? _weapon;

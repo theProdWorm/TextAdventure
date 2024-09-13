@@ -28,6 +28,12 @@ public class Player : Character
     
     public int EmptyInventorySpaces() => Inventory.Where(x => x == null).Count();
 
+    public void IncreaseBaseMaxHealth(int amount)
+    {
+        _baseMaxHealth += amount;
+        _currentHealth = EffectiveMaxHealth;
+    }
+
     protected override void ReceiveAttack(int damage, float accuracy, bool isCrit)
     {
         base.ReceiveAttack(damage, accuracy, isCrit);

@@ -152,6 +152,8 @@ public class Game
         
         _currentFloorIndex++;
         TextHandler.PrettyWrite("You arrive on the next floor of the dungeon. Who knows what challenges await you here? \n", TextHandler.TextType.Description);
+        _player.IncreaseBaseMaxHealth(10);
+        TextHandler.PrettyWrite("Your power has grown. Your max health has been increased by 10. \n");
     }
 
     private void LoseGame()
@@ -192,14 +194,14 @@ public class Game
         _armorPrefixes.Add("Mighty", new ArmorComponent("Mighty", 10, 0f));
         
         _armorTypes.Add("Leather", new ArmorComponent("Leather Armor", 2, 0.3f));
-        _armorTypes.Add("Chain", new ArmorComponent("Chainmail", 5, 0.0f));
-        _armorTypes.Add("Plate", new ArmorComponent("Plate Armor", 10, -1.0f));
+        _armorTypes.Add("Chain", new ArmorComponent("Chainmail", 5, 0.1f));
+        _armorTypes.Add("Plate", new ArmorComponent("Plate Armor", 10, -0.1f));
         
         _armorSuffixes.Add("Clumsy", new ArmorComponent("of Clumsiness", 0, -0.1f));
         _armorSuffixes.Add("Unwieldy", new ArmorComponent("of Unwieldiness", 0, -0.05f));
         _armorSuffixes.Add("Normal", new ArmorComponent("", 0, 0f));
-        _armorSuffixes.Add("Swift", new ArmorComponent("of Swiftness", 0, 0.2f));
-        _armorSuffixes.Add("Divine", new ArmorComponent("of Divine Protection", 0, 0.4f));
+        _armorSuffixes.Add("Swift", new ArmorComponent("of Swiftness", 0, 0.1f));
+        _armorSuffixes.Add("Divine", new ArmorComponent("of Divine Protection", 0, 0.2f));
     }
 
     private void InstantiateWeaponFactories()
