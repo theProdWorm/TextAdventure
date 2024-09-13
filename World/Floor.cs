@@ -78,6 +78,7 @@ public class Floor
         Door nextFloorDoor = new Door(nextFloorRoom, EnterRoom);
         _rooms[^1].AddDoor(nextFloorDoor);
         _rooms[^2].AddDoor(nextFloorDoor);
+        shopRoom.AddDoor(nextFloorDoor);
 
         if (_generateBonusRoom)
         {

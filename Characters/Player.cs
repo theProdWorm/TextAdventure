@@ -35,6 +35,15 @@ public class Player : Character
         Gold += amount;
         TextHandler.PrettyWrite($"You gained {amount} gold! \n");
     }
+
+    public bool TryPurchaseItem(Item item, int cost)
+    {
+        if (Gold < cost) 
+            return false;
+        Gold -= cost;
+        RecieveItem(item, false);
+        return true;
+    }
     
     public bool UseItem(int index)
     {
@@ -60,31 +69,41 @@ public class Player : Character
     public void RecieveReward(LootHoard loot)
     {
         AddGold(loot.Gold);
+        
         if (loot.Item != null)
         {
-            switch (loot.Item)
-            {
-                case Weapon weapon:
-                    PromptEquipWeapon(weapon);
-                    break;
-                case Armor armor:
-                    PromptEquipArmor(armor);
-                    break;
-                default:
-                    PromptPickUpItem(loot.Item);
-                    break;
-            }
+            RecieveItem(loot.Item);
         }
 
         Console.Clear();
     }
 
-    private void PromptEquipWeapon(Weapon weapon)
+    private void RecieveItem(Item item, bool prompt = true)
     {
-        TextHandler.PrettyWrite($"You received {weapon.ToString()}! \n");
-        TextHandler.PrettyWrite($"You're currently using {_weapon.ToString()}! \n");
-        ChoiceEvent choiceEvent = new ChoiceEvent("Replace current weapon? ", ["Yes", "No"]);
-        bool replace = choiceEvent.GetChoice() == 0;
+        switch (item)
+        {
+            case Weapon weapon:
+                EquipWeapon(weapon, prompt);
+                break;
+            case Armor armor:
+                EquipArmor(armor, prompt);
+                break;
+            default:
+                PickUpItem(item, prompt);
+                break;
+        }
+    }
+
+    private void EquipWeapon(Weapon weapon, bool prompt)
+    {
+        bool replace = true;
+        if (prompt)
+        {
+            TextHandler.PrettyWrite($"You received {weapon.ToString()}! \n");
+            TextHandler.PrettyWrite($"You're currently using {_weapon.ToString()}! \n");
+            ChoiceEvent choiceEvent = new ChoiceEvent("Replace current weapon? ", ["Yes", "No"]);
+            replace = choiceEvent.GetChoice() == 0;
+        }
         if (replace)
         {
             Equip(weapon);
@@ -92,12 +111,16 @@ public class Player : Character
         }
     }
 
-    private void PromptEquipArmor(Armor armor)
+    private void EquipArmor(Armor armor, bool prompt)
     {
-        TextHandler.PrettyWrite($"You received {armor.ToString()}! \n");
-        TextHandler.PrettyWrite($"You're currently using {_armor.ToString()}! \n");
-        ChoiceEvent choiceEvent = new ChoiceEvent("Replace current armor? ", ["Yes", "No"]);
-        bool replace = choiceEvent.GetChoice() == 0;
+        bool replace = true;
+        if (prompt)
+        {
+            TextHandler.PrettyWrite($"You received {armor.ToString()}! \n");
+            TextHandler.PrettyWrite($"You're currently using {_armor.ToString()}! \n");
+            ChoiceEvent choiceEvent = new ChoiceEvent("Replace current armor? ", ["Yes", "No"]);
+            replace = choiceEvent.GetChoice() == 0;
+        }
         if (replace)
         {
             Equip(armor);
@@ -105,12 +128,17 @@ public class Player : Character
         }
     }
 
-    private void PromptPickUpItem(Item item)
+    private void PickUpItem(Item item, bool prompt)
     {
-        TextHandler.PrettyWrite($"You received {item.ToString()}! \n");
-        TextHandler.PrettyWrite($"You currently have {(IsInventoryFull() ? "no" : EmptyInventorySpaces())} empty spaces \n");
-        ChoiceEvent choiceEvent = new ChoiceEvent("Pick up item? ", ["Yes", "No"]);
-        bool pickUp = choiceEvent.GetChoice() == 0;
+        bool pickUp = true;
+        if (prompt)
+        {
+            TextHandler.PrettyWrite($"You received {item.ToString()}! \n");
+            TextHandler.PrettyWrite(
+                $"You currently have {(IsInventoryFull() ? "no" : EmptyInventorySpaces())} empty spaces \n");
+            ChoiceEvent choiceEvent = new ChoiceEvent("Pick up item? ", ["Yes", "No"]);
+            pickUp = choiceEvent.GetChoice() == 0;
+        }
         if (pickUp)
         {
             // if (IsInventoryFull())
@@ -128,7 +156,7 @@ public class Player : Character
                 else
                     choices[i] = Inventory[i].ToString();
             }
-            choiceEvent = new ChoiceEvent("Choose a slot to place the item in", choices);
+            ChoiceEvent choiceEvent = new ChoiceEvent("Choose a slot to place the item in", choices);
             while (!TryPlaceInInventory(item, choiceEvent.GetChoice())) {}
         }
     }
@@ -153,8 +181,9 @@ public class Player : Character
     public void PrintStats()
     {
         TextHandler.PrettyWrite($@"Health: {_currentHealth} / {EffectiveMaxHealth}
-Equipped Armor: {_armor!.ToString()}
 Equipped Weapon: {_weapon!.ToString()}
+Equipped Armor: {_armor!.ToString()}
+Gold: {Gold}
 ", TextHandler.TextType.Good, printFast: true);
     }
 }

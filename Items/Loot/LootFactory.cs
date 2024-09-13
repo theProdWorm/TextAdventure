@@ -48,4 +48,24 @@ public class LootFactory(WeaponFactory weaponFactory, ArmorFactory armorFactory)
         }
         return new LootHoard(gold, lootType, item);
     }
+
+    public Item GenerateItem()
+    {
+        LootType lootType = GetRandomElementByWeight(_lootWeights);
+        Item item;
+        switch (lootType)
+        {
+            case LootType.Weapon:
+                item = _weaponFactory.GenerateWeapon();
+                break;
+            case LootType.Armor:
+                item = _armorFactory.GenerateArmor();
+                break;
+            default:
+                item = GetRandomElementByWeight(_items.Values.ToList());
+                break;
+        }
+
+        return item;
+    }
 }

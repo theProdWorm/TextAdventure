@@ -4,20 +4,10 @@ namespace TextAdventure.Factories;
 
 public class WeaponFactory : Factory
 {
-    // public static readonly Weapon DefaultWeapon = new(
-    //     new("Clunky", 0, 0),
-    //     new("Sword", 3, 0.8f),
-    //     new("the Rookie", 0, 0));
 
-    private Dictionary<string, WeightedElement<WeaponComponent>> _prefixes = [];
-    private Dictionary<string, WeightedElement<WeaponComponent>> _weaponTypes = [];
-    private Dictionary<string, WeightedElement<WeaponComponent>> _suffixes = [];
-
-    public WeaponFactory()
-    {
-        // _prefixes.Add(new(10, new("", 0, 0)));
-        // _suffixes.Add(new(10, new("", 0, 0)));
-    }
+    private readonly Dictionary<string, WeightedElement<WeaponComponent>> _prefixes = [];
+    private readonly Dictionary<string, WeightedElement<WeaponComponent>> _weaponTypes = [];
+    private readonly Dictionary<string, WeightedElement<WeaponComponent>> _suffixes = [];
 
     public void RegisterPrefix(string key, int weight, WeaponComponent prefix)
     {

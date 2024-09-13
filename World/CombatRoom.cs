@@ -20,6 +20,8 @@ public class CombatRoom : Room
 
     public override void Update(Player player)
     {
+        TextHandler.PrettyWrite("You enter a combat encounter! \n");
+        TextHandler.PrettyWrite($"Facing you {(_enemies.Count > 1 ? "are" : "is")} {_enemies.Count} {(_enemies.Count > 1 ? "enemies" : "enemy")}. \n");
         bool isPlayerTurn = true;
         while (_enemies.Count > 0)
         {
@@ -42,9 +44,10 @@ public class CombatRoom : Room
     /// <returns>Whether the action taken should end the turn</returns>
     private bool CombatPlayerTurn(ref List<Character> enemies, Player player)
     {
+        TextHandler.PrettyWrite("It's your turn! \n", TextHandler.TextType.Description);
         player.PrintStats();
         
-        const string combatDescription = "It's your turn! What is your next move?";
+        const string combatDescription = "What is your next move?";
         string[] combatChoices = ["Attack", "Use item"];
 
         ChoiceEvent combatChoice = new(combatDescription, combatChoices);
@@ -79,8 +82,11 @@ public class CombatRoom : Room
                 
                 const string useItemDescription = "What item do you want to use?";
                 List<string> useItemChoices = [];
-                useItemChoices.AddRange(player.Inventory.OfType<Item>().Select(item => item.Name));
-
+                //useItemChoices.AddRange(player.Inventory.OfType<Item>().Select(item => item.Name));
+                for (int i = 0; i < player.Inventory.Length; i++)
+                {
+                    useItemChoices.Add(player.Inventory[i] != null ? player.Inventory[i].Name : "Empty");
+                }
                 //useItemChoices = (from item in _player.Inventory select item.Name).ToList();
                 
                 ChoiceEvent useItemChoice = new(useItemDescription, useItemChoices.ToArray());
@@ -122,6 +128,6 @@ public class CombatRoom : Room
 
     public override string ToString()
     {
-        return $"Reward: {(_lootHoard.Item is not null ? _lootHoard.Item.ToString() : "heaps of gold")}";
+        return $"[Encounter] [Rewards {(_lootHoard.Item is not null ? _lootHoard.Item.Name : "heaps of gold")}]";
     }
 }

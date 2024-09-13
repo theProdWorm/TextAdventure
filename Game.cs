@@ -77,6 +77,7 @@ public class Game
         _player = new Player(playerName, 20, 
                             _weaponFactory1.GenerateWeapon("Rusty", "Sword", "Clumsy"), 
                             _armorFactory1.GenerateArmor("Rusty", "Chain", "Clumsy"));
+        _player.Inventory[0] = _items["HealthPotion"];
         
     }
     
@@ -100,7 +101,7 @@ public class Game
     private void NextFloor()
     {
         _currentFloorIndex++;
-        TextHandler.PrettyWrite("You arrive on the next floor of the dungeon. Who knows what challenges await you here? ", TextHandler.TextType.Description);
+        TextHandler.PrettyWrite("You arrive on the next floor of the dungeon. Who knows what challenges await you here? \n", TextHandler.TextType.Description);
     }
     
     #endregion
@@ -108,15 +109,16 @@ public class Game
     #region Item Instantiation
     private void InstantiateWeaponLists()
     {
-        _weaponPrefixes.Add("Rusty", new WeaponComponent("Rusty", -2, 0f, 0f));
+        _weaponPrefixes.Add("Rusty", new WeaponComponent("Rusty", -3, 0f, 0f));
         _weaponPrefixes.Add("Blunt", new WeaponComponent("Blunt", -1, 0f, 0f));
         _weaponPrefixes.Add("Normal", new WeaponComponent("", 0, 0f, 0f));
-        _weaponPrefixes.Add("Sharp", new WeaponComponent("Sharp", 3, 0f, 0f));
-        _weaponPrefixes.Add("Mighty", new WeaponComponent("Mighty", 8, 0f, 0f));
+        _weaponPrefixes.Add("Sharp", new WeaponComponent("Sharp", 1, 0f, 0f));
+        _weaponPrefixes.Add("Mighty", new WeaponComponent("Mighty", 3, 0f, 0f));
         
         _weaponTypes.Add("Dagger", new WeaponComponent("Dagger", 5, 1.0f, 0.5f));
         _weaponTypes.Add("Sword", new WeaponComponent("Sword", 7, 0.9f, 0.2f));
         _weaponTypes.Add("Hammer", new WeaponComponent("War Hammer", 10, 0.8f, 0.05f));
+        
         _weaponTypes.Add("Spear", new WeaponComponent("Spear", 7, 1.2f, 0.0f));
         _weaponTypes.Add("Flail", new WeaponComponent("Flail", 10, 0.6f, 0.5f));
         
@@ -129,21 +131,21 @@ public class Game
 
     private void InstantiateArmorLists()
     {
-        _armorPrefixes.Add("Rusty", new ArmorComponent("Rusty", -5, 0f));
-        _armorPrefixes.Add("Old", new ArmorComponent("Old", -2, 0f));
+        _armorPrefixes.Add("Rusty", new ArmorComponent("Rusty", -2, 0f));
+        _armorPrefixes.Add("Old", new ArmorComponent("Old", -1, 0f));
         _armorPrefixes.Add("Normal", new ArmorComponent("", 0, 0f));
-        _armorPrefixes.Add("Craftsmans", new ArmorComponent("Craftsman's", 10, 0f));
-        _armorPrefixes.Add("Mighty", new ArmorComponent("Mighty", 20, 0f));
+        _armorPrefixes.Add("Craftsmans", new ArmorComponent("Craftsman's", 2, 0f));
+        _armorPrefixes.Add("Mighty", new ArmorComponent("Mighty", 4, 0f));
         
-        _armorTypes.Add("Leather", new ArmorComponent("Leather Armor", 5, 0.5f));
-        _armorTypes.Add("Chain", new ArmorComponent("Chainmail", 10, 0.0f));
-        _armorTypes.Add("Plate", new ArmorComponent("Plate Armor", 20, -1.0f));
+        _armorTypes.Add("Leather", new ArmorComponent("Leather Armor", 3, 0.3f));
+        _armorTypes.Add("Chain", new ArmorComponent("Chainmail", 4, 0.0f));
+        _armorTypes.Add("Plate", new ArmorComponent("Plate Armor", 5, -0.3f));
         
         _armorSuffixes.Add("Clumsy", new ArmorComponent("of Clumsiness", 0, -0.3f));
         _armorSuffixes.Add("Unwieldy", new ArmorComponent("of Unwieldiness", 0, -0.1f));
         _armorSuffixes.Add("Normal", new ArmorComponent("", 0, 0f));
-        _armorSuffixes.Add("Swift", new ArmorComponent("of Swiftness", 0, 0.3f));
-        _armorSuffixes.Add("Divine", new ArmorComponent("of Divine Protection", 0, 0.5f));
+        _armorSuffixes.Add("Swift", new ArmorComponent("of Swiftness", 0, 0.1f));
+        _armorSuffixes.Add("Divine", new ArmorComponent("of Divine Protection", 0, 0.3f));
     }
 
     private void InstantiateWeaponFactories()

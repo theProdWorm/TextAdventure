@@ -17,6 +17,6 @@ public class NextFloorRoom : Room
 
     public override string ToString()
     {
-        return "This stairwell leads to the next floor";
+        return "[Next Floor]";
     }
 }

@@ -3,7 +3,7 @@ using TextAdventure.Items.Items;
 namespace TextAdventure.Items.Armors;
 
 public class Armor(ArmorComponent prefix, ArmorComponent armorType, ArmorComponent suffix) : Item(
-    $"{prefix.Name} {armorType.Name} {suffix.Name}")
+    $"{prefix.Name} {armorType.Name} {suffix.Name}", 50)
 {
     private readonly ArmorComponent _prefix = prefix;
     private readonly ArmorComponent _armorType = armorType;

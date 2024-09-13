@@ -2,7 +2,7 @@ using TextAdventure.Characters;
 
 namespace TextAdventure.Items.Items;
 
-public abstract class Item(string name)
+public abstract class Item(string name, int value = 20)
 {
     public enum ItemType
     {
@@ -12,6 +12,8 @@ public abstract class Item(string name)
     
     public string Name { get; } = name.Trim();
     public ItemType Type { get; } = ItemType.Healing;
+
+    public int Value { get; } = value;
 
     public virtual void Print()
     {

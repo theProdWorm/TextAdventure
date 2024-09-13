@@ -2,7 +2,7 @@ using TextAdventure.Items.Items;
 
 namespace TextAdventure.Items.Weapons;
 
-public class Weapon(WeaponComponent prefix, WeaponComponent weaponType, WeaponComponent suffix) : Item($"{prefix.Name} {weaponType.Name} {suffix.Name}")
+public class Weapon(WeaponComponent prefix, WeaponComponent weaponType, WeaponComponent suffix) : Item($"{prefix.Name} {weaponType.Name} {suffix.Name}", 50)
 {
     private readonly WeaponComponent _prefix = prefix;
     private readonly WeaponComponent _weaponType = weaponType;

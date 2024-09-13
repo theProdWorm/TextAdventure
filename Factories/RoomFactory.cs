@@ -28,7 +28,7 @@ public class RoomFactory(EnemyFactory enemyFactory, LootFactory lootFactory, Act
 
     public Room GenerateShopRoom()
     {
-        return new ShopRoom();
+        return new ShopRoom(_lootFactory);
     }
 
     public Room GenerateBonusRoom()
