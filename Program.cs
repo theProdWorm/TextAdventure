@@ -7,5 +7,5 @@ if (String.IsNullOrEmpty(playerName))
 
 Console.Clear();
 
-Game game = new Game(playerName, 3);
+Game game = new Game(playerName, 6);
 game.Run();

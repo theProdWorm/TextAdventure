@@ -25,6 +25,8 @@ public class CombatRoom : Room
         bool isPlayerTurn = true;
         while (_enemies.Count > 0)
         {
+            if (player.IsDead)
+                return;
             if (isPlayerTurn)
                 isPlayerTurn = CombatPlayerTurn(ref _enemies, player);
             else

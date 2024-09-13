@@ -37,7 +37,7 @@ public class Character
     }
     
     /// <returns>Whether the character is still alive</returns>
-    private void ReceiveAttack(int damage, float accuracy, bool isCrit)
+    protected virtual void ReceiveAttack(int damage, float accuracy, bool isCrit)
     {
         float effectiveAccuracy = accuracy * (1 - _armor!.Evasion);
         
@@ -69,10 +69,10 @@ public class Character
     {
         int realAmountHealed = healAmount;
         
-        if(_currentHealth + healAmount > _baseMaxHealth)
+        if(_currentHealth + healAmount > EffectiveMaxHealth)
         {
-            realAmountHealed = _baseMaxHealth - _currentHealth;
-            _currentHealth = _baseMaxHealth;
+            realAmountHealed = EffectiveMaxHealth - _currentHealth;
+            _currentHealth = EffectiveMaxHealth;
         }
         else
         {

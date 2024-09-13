@@ -13,10 +13,13 @@ public class Player : Character
 
     public readonly Item?[] Inventory = new Item?[3];
 
-    public Player(string name, int health, Weapon weapon, Armor armor) : base(name, health)
+    private Action _loseGame;
+
+    public Player(string name, int health, Weapon weapon, Armor armor, Action loseGame) : base(name, health)
     {
         Equip(weapon);
         Equip(armor);
+        _loseGame = loseGame;
     }
     
     public bool IsInventoryEmpty() => Inventory.All(x => x == null);
@@ -24,10 +27,12 @@ public class Player : Character
     public bool IsInventoryFull() => Inventory.All(x => x != null);
     
     public int EmptyInventorySpaces() => Inventory.Where(x => x == null).Count();
-    
-    public void ItemPurchased()
+
+    protected override void ReceiveAttack(int damage, float accuracy, bool isCrit)
     {
-        
+        base.ReceiveAttack(damage, accuracy, isCrit);
+        if (IsDead)
+            _loseGame();
     }
 
     public void AddGold(int amount)

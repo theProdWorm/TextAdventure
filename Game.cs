@@ -47,6 +47,7 @@ public class Game
     private int _currentFloorIndex = 0;
 
     private bool _isGameRunning = true;
+    private bool _victory = false;
     
     public Game(string playerName, int roomsPerFloor)
     {
@@ -74,7 +75,9 @@ public class Game
         
         _player = new Player(playerName, 20, 
                             _weaponFactory1.GenerateWeapon("Rusty", "Sword", "Clumsy"), 
-                            _armorFactory1.GenerateArmor("Rusty", "Chain", "Clumsy"));
+                            _armorFactory1.GenerateArmor("Rusty", "Chain", "Clumsy"), 
+                            LoseGame);
+        _player.Inventory[0] = _items["HealthPotion"];
         
     }
     
@@ -86,19 +89,41 @@ public class Game
             _floors[_currentFloorIndex].CurrentRoom.Update(_player);
             
         }
+
+        Console.Clear();
+        if (_victory)
+        {
+            TextHandler.PrettyWrite("Success! You have passed through the dungeon, and gained vast riches! ");
+        }
+        else
+        {
+            TextHandler.PrettyWrite("Your quest for treasure has led you to your doom. Was it worth it? ");
+        }
     }
 
     #region Game Logic
 
     private void Introduction()
     {
-        
+        TextHandler.PrettyWrite("You arrive at the entrance of a dungeon. Great treasure awaits you at the end. Can you make it there? \n");
     }
 
     private void NextFloor()
     {
+        if (_currentFloorIndex == _floors.Count - 1)
+        {
+            _victory = true;
+            _isGameRunning = false;
+            return;
+        }
+        
         _currentFloorIndex++;
         TextHandler.PrettyWrite("You arrive on the next floor of the dungeon. Who knows what challenges await you here? \n", TextHandler.TextType.Description);
+    }
+
+    private void LoseGame()
+    {
+        _isGameRunning = false;
     }
     
     #endregion
