@@ -96,7 +96,7 @@ public class Character
     public string GetCombatPrint()
     {
         return $"{Name}, {_currentHealth} / {EffectiveMaxHealth} health" + 
-               $"\n\t\tEquipped weapon: {_weapon!.Name}" +
-               $"\n\t\tEquipped armor: {_armor!.Name}";
+               $"\n\t\tEquipped weapon: {_weapon!.ToString()}" +
+               $"\n\t\tEquipped armor: {_armor!.ToString()}";
     }
 }
