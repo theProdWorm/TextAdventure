@@ -48,8 +48,11 @@ public class Game
 
     private bool _isGameRunning = true;
     private bool _victory = false;
+
+    private Action _mainMenu;
+    private Action _exitGame;
     
-    public Game(string playerName, int roomsPerFloor)
+    public Game(string playerName, int roomsPerFloor, Action mainMenu, Action exitGame)
     {
         InstantiateWeaponLists();
         InstantiateWeaponFactories();
@@ -78,7 +81,9 @@ public class Game
                             _armorFactory1.GenerateArmor("Rusty", "Chain", "Clumsy"), 
                             LoseGame);
         _player.Inventory[0] = _items["HealthPotion"];
-        
+
+        _mainMenu = mainMenu;
+        _exitGame = exitGame;
     }
     
     public void Run()
@@ -91,14 +96,24 @@ public class Game
         }
 
         Console.Clear();
+        string endMessage;
         if (_victory)
         {
-            TextHandler.PrettyWrite("Success! You have passed through the dungeon, and gained vast riches! ");
+            endMessage = "Success! You have passed through the dungeon, and gained vast riches! ";
         }
         else
         {
-            TextHandler.PrettyWrite("Your quest for treasure has led you to your doom. Was it worth it? ");
+            endMessage = "Your quest for treasure has led you to your doom. Was it worth it? ";
         }
+
+        ChoiceEvent choiceEvent = new ChoiceEvent(endMessage, ["Main Menu", "Exit Game"]);
+        bool exit = choiceEvent.GetChoice() == 1;
+        if (!exit)
+        {
+            _mainMenu();
+            return;
+        }
+        _exitGame();
     }
 
     #region Game Logic
@@ -301,7 +316,7 @@ public class Game
         _lootFactory1.RegisterLootWeight(2, LootType.Item);
         _lootFactory1.RegisterLootWeight(2, LootType.Gold);
         
-        _lootFactory1.RegisterItem("LesserHealthPotion", 3, _items["LesserHealthPotion"]);
+        _lootFactory2.RegisterItem("LesserHealthPotion", 3, _items["LesserHealthPotion"]);
         _lootFactory2.RegisterItem("HealthPotion", 5, _items["HealthPotion"]);
         _lootFactory2.RegisterItem("GreaterHealthPotion", 1, _items["GreaterHealthPotion"]);
         _lootFactory2.RegisterItem("Key", 1, _items["Key"]);

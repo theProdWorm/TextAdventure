@@ -48,7 +48,7 @@ public class Floor
 
         for (int i = 1; i < _nRoomsOnFloor; i++)
         {
-            int roomsToGenerate = Game.random.Next(2, 4);
+            int roomsToGenerate = Game.random.Next(2, 5);
             List<Room> rooms = [];
             for (int j = 0; j < roomsToGenerate; j++)
             {
