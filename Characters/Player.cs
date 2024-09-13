@@ -170,7 +170,7 @@ public class Player : Character
     {
         if (Inventory[index] != null)
         {
-            ChoiceEvent choiceEvent = new ChoiceEvent($"Replace {Inventory[index].ToString()}?", ["Yes", "No"]);
+            ChoiceEvent choiceEvent = new ChoiceEvent($"Replace {Inventory[index]!.ToString()}?", ["Yes", "No"]);
             bool replace = choiceEvent.GetChoice() == 0;
             if (!replace)
             {
@@ -185,10 +185,9 @@ public class Player : Character
 
     public void PrintStats()
     {
-        TextHandler.PrettyWrite($@"Health: {_currentHealth} / {EffectiveMaxHealth}
+        TextHandler.PrettyWrite($@"Health: {_currentHealth} / {EffectiveMaxHealth}     Gold: {Gold}
 Equipped Weapon: {_weapon!.ToString()}
 Equipped Armor: {_armor!.ToString()}
-Gold: {Gold}
 ", TextHandler.TextType.Good, printFast: true);
     }
 }

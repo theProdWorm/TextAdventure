@@ -21,7 +21,7 @@ public abstract class Room
         _doors.Add(door);
     }
 
-    protected void ChooseDoor()
+    protected void ChooseDoor(Player player)
     {
         string[] choices = new string[_doors.Count];
         for (int i = 0; i < _doors.Count; i++)
@@ -29,7 +29,7 @@ public abstract class Room
             choices[i] = _doors[i].ToString();
         }
         ChoiceEvent choiceEvent = new ChoiceEvent($"Facing you are {_doors.Count} doors. Which will you enter? ", choices);
-        while (!_doors[choiceEvent.GetChoice()].TryEnter()) {}
+        while (!_doors[choiceEvent.GetChoice()].TryEnter(player)) {}
     }
     
     public new abstract string ToString();

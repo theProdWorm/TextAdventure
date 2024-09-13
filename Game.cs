@@ -287,18 +287,24 @@ public class Game
         _items.Add("LesserHealthPotion", new HealthPotion("Lesser Health Potion", 10));
         _items.Add("HealthPotion", new HealthPotion("Health Potion", 20));
         _items.Add("GreaterHealthPotion", new HealthPotion("Greater Health Potion", 40));
+        _items.Add("Key", new KeyItem());
     }
 
     private void InstantiateLootFactories()
     {
         _lootFactory1.RegisterItem("LesserHealthPotion", 8, _items["LesserHealthPotion"]);
+        _lootFactory1.RegisterItem("HealthPotion", 1, _items["HealthPotion"]);
+        _lootFactory1.RegisterItem("Key", 1, _items["Key"]);
         
         _lootFactory1.RegisterLootWeight(1, LootType.Weapon);
         _lootFactory1.RegisterLootWeight(1, LootType.Armor);
         _lootFactory1.RegisterLootWeight(2, LootType.Item);
         _lootFactory1.RegisterLootWeight(2, LootType.Gold);
         
-        _lootFactory2.RegisterItem("HealthPotion", 8, _items["HealthPotion"]);
+        _lootFactory1.RegisterItem("LesserHealthPotion", 3, _items["LesserHealthPotion"]);
+        _lootFactory2.RegisterItem("HealthPotion", 5, _items["HealthPotion"]);
+        _lootFactory2.RegisterItem("GreaterHealthPotion", 1, _items["GreaterHealthPotion"]);
+        _lootFactory2.RegisterItem("Key", 1, _items["Key"]);
         
         _lootFactory2.RegisterLootWeight(2, LootType.Weapon);
         _lootFactory2.RegisterLootWeight(2, LootType.Armor);

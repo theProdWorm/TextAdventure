@@ -50,7 +50,7 @@ public class ShopRoom : Room
             Console.Clear();
         }
         
-        ChooseDoor();
+        ChooseDoor(player);
     }
 
     private void GenerateItems(int itemCount)

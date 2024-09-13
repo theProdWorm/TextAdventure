@@ -40,7 +40,7 @@ public class CombatRoom : Room
         
         player.ReceiveReward(_lootHoard);
         
-        ChooseDoor();
+        ChooseDoor(player);
     }
     
     /// <returns>Whether the action taken should end the turn</returns>

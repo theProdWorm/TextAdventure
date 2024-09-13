@@ -1,32 +1,56 @@
+using TextAdventure.Characters;
+using TextAdventure.Items.Items;
+using TextAdventure.States;
+
 namespace TextAdventure.World;
 
 public class Door
 {
-    private Room _room;
-    private Action<Room> _enter;
-    private bool _isLocked;
+    private readonly Room _roomBehindDoor;
+    private readonly Action<Room> _enter;
+    private readonly bool _isLocked;
 
-    public Door(Room room, Action<Room> enter, bool isLocked = false)
+    public Door(Room roomBehindDoor, Action<Room> enter, bool isLocked = false)
     {
-        _room = room;
+        _roomBehindDoor = roomBehindDoor;
         _enter = enter;
         _isLocked = isLocked;
     }
 
-    public bool TryEnter()
+    public bool TryEnter(Player player)
     {
         if (!_isLocked)
         {
-            _enter(_room);
+            _enter(_roomBehindDoor);
             return true;
         }
 
-        // TODO: check for key
-        return false;
+        // TODO: Check for key
+
+        int keyIndex = -1;
+        for (int i = 0; i < player.Inventory.Length; i++)
+        {
+            var item = player.Inventory[i];
+            if (item == null)
+                continue;
+
+            if (item.Type == Item.ItemType.Key)
+            {
+                keyIndex = i;
+            }
+        }
+        
+        if(keyIndex < 0)
+            return false;
+
+        player.Inventory[keyIndex] = null;
+        TextHandler.PrettyWrite($"{player.Name} used a key to enter a locked room!");
+
+        return true;
     }
 
-    public string ToString()
+    public new string ToString()
     {
-        return _room.ToString();
+        return _roomBehindDoor.ToString();
     }
 }

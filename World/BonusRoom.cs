@@ -35,7 +35,7 @@ public class BonusRoom(LootHoard armorChest, LootHoard weaponChest, LootHoard go
             _ => _goldChest
         });
         
-        ChooseDoor();
+        ChooseDoor(player);
     }
 
     public override string ToString()
