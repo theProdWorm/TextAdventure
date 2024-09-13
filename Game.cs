@@ -52,7 +52,7 @@ public class Game
     private Action _mainMenu;
     private Action _exitGame;
     
-    public Game(string playerName, int roomsPerFloor, Action mainMenu, Action exitGame)
+    public Game(string playerName, int roomsPerFloor, Action mainMenu, Action exitGame, Difficulty difficulty, string startingWeapon)
     {
         InstantiateWeaponLists();
         InstantiateWeaponFactories();
@@ -76,9 +76,27 @@ public class Game
         
         InstantiateFloors(roomsPerFloor);
         
+        //  Weapon mods        armor mods
+        ((string, string), (string, string)) weaponAndArmorPrefixesAndSuffixes = difficulty switch
+        {//                              weapon mods            armor mods
+            Difficulty.Easy      => (("Normal", "Normal"), ("Normal", "Normal")),
+            Difficulty.Medium    => (("Old", "Unwieldy"),  ("Old", "Unwieldy")),
+            Difficulty.Hard      => (("Rusty", "Clumsy"),  ("Rusty", "Clumsy")),
+            Difficulty.SuperEasy => (("Mighty", "Divine"), ("Mighty", "Divine")),
+            _                    => (("Old", "Unwieldy"),  ("Old", "Unwieldy")),
+        };
+        //       ^    ^    ^    ^    ^
+        // Yes I know this is incredibly ugly
+               
         _player = new Player(playerName, 20, 
-                            _weaponFactory1.GenerateWeapon("Rusty", "Sword", "Normal"), 
-                            _armorFactory1.GenerateArmor("Rusty", "Chain", "Normal"), 
+                            new Weapon(
+                                _weaponPrefixes[weaponAndArmorPrefixesAndSuffixes.Item1.Item1], 
+                                _weaponTypes[startingWeapon],
+                                _weaponSuffixes[weaponAndArmorPrefixesAndSuffixes.Item1.Item2]), 
+                            new Armor(
+                                _armorPrefixes[weaponAndArmorPrefixesAndSuffixes.Item2.Item1],
+                                _armorTypes[difficulty == Difficulty.SuperEasy ? "Leather" : "Chain"],
+                                _armorSuffixes[weaponAndArmorPrefixesAndSuffixes.Item2.Item2]), 
                             LoseGame);
         _player.Inventory[0] = _items["HealthPotion"];
 

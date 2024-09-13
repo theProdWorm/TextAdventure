@@ -17,33 +17,54 @@ void MainMenu()
     
     ChoiceEvent choiceEvent = new ChoiceEvent("Main Menu", ["New Game", "Exit"]);
     int choice = choiceEvent.GetChoice();
-    switch (choice)
+    currentState = choice switch
     {
-        case 0:
-            currentState = NewGame;
-            break;
-        default:
-            currentState = ExitGame;
-            break;
-    }
+        0 => NewGame,
+        _ => ExitGame
+    };
 }
 
 void NewGame()
 {
-    
-
     TextHandler.PrettyWrite("What's your name? (Default: Player)", TextHandler.TextType.Description, true);
     string playerName = Console.ReadLine()!;
     if (String.IsNullOrEmpty(playerName))
         playerName = "Player";
 
     Console.Clear();
-
-    Game game = new Game(playerName, 6, MainMenu, ExitGame);
+    
+    string[] difficulties =
+    [
+        "Easy",
+        "Medium",
+        "Hard",
+        "Super easy"
+    ];
+    string[] weapons =
+    [
+        "Dagger",
+        "Sword",
+        "Hammer"
+    ];
+    ChoiceEvent difficultyChoice = new("Pick a difficulty", difficulties);
+    ChoiceEvent weaponChoice = new("Pick a starting weapon", weapons);
+    
+    Difficulty chosenDifficulty = (Difficulty) difficultyChoice.GetChoice();
+    string chosenWeapon = weapons[weaponChoice.GetChoice()];
+    
+    Game game = new Game(playerName, 6, MainMenu, ExitGame, chosenDifficulty, chosenWeapon);
     game.Run();
 }
 
 void ExitGame()
 {
     run = false;
+}
+
+public enum Difficulty
+{
+    Easy,
+    Medium,
+    Hard,
+    SuperEasy
 }
