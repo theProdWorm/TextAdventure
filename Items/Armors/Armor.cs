@@ -12,17 +12,10 @@ public class Armor(ArmorComponent prefix, ArmorComponent armorType, ArmorCompone
     public int Health => _prefix.Health + _armorType.Health + _suffix.Health;
     public float Evasion => _prefix.Evasion + _armorType.Evasion + _suffix.Evasion;
 
-    public override void Print()
-    {
-        TextHandler.PrettyWrite(Name + "\n", TextHandler.TextType.Description);
-        TextHandler.PrettyWrite(@$"Stats:
-Health: {Health}
-Evasion: {Evasion}
-", TextHandler.TextType.Good);
-    }
-
     public override string ToString()
     {
-        return $"{Name} [+{Health} Health] [{Evasion} Evasion]";
+        int evasionPercent = (int) MathF.Round(Evasion / 100f);
+        
+        return $"{Name} [+{Health} Health] [{evasionPercent}% Evasion]";
     }
 }

@@ -11,18 +11,12 @@ public class Weapon(WeaponComponent prefix, WeaponComponent weaponType, WeaponCo
     public int Damage => _prefix.Damage + _weaponType.Damage + _suffix.Damage;
     public float Accuracy => _prefix.Accuracy + _weaponType.Accuracy + _suffix.Accuracy;
     public float CritChance => _prefix.CritChance + _weaponType.CritChance + _suffix.CritChance;
-    
-    public override void Print()
-    {
-        TextHandler.PrettyWrite(Name + "\n", TextHandler.TextType.Description);
-        TextHandler.PrettyWrite(@$"Stats:
-Damage: {Damage}
-Accuracy: {Accuracy}
-", TextHandler.TextType.Good);
-    }
 
     public override string ToString()
     {
-        return $"{Name} [{Damage} Damage] [{Accuracy} Accuracy] [{CritChance} Crit Chance]";
+        int accuracyPercent = (int) MathF.Round(Accuracy * 100);
+        int critChancePercent = (int) MathF.Round(CritChance * 100);
+        
+        return $"{Name} [{Damage} Damage] [{accuracyPercent}% Accuracy] [{critChancePercent}% Crit Chance]";
     }
 }
