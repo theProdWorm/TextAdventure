@@ -108,9 +108,10 @@ public class CombatRoom : Room
             {
                 case 0: // Attack ally (10%)
                     int enemyIndex = Game.random.Next(enemies.Count);
+                    Character target = enemies[enemyIndex];
                     enemy.Attack(enemies[enemyIndex]);
                     
-                    if(enemy.IsDead)
+                    if(target.IsDead)
                         enemies.RemoveAt(enemyIndex);
                     break;
                 case 1: // Do nothing (10%)
