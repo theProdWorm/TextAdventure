@@ -1,4 +1,3 @@
-using System.Reflection.Metadata.Ecma335;
 using TextAdventure.Characters;
 using TextAdventure.Factories;
 using TextAdventure.Items.Armors;
@@ -18,30 +17,30 @@ public class Game
     private readonly Dictionary<string, WeaponComponent> _weaponTypes = new();
     private readonly Dictionary<string, WeaponComponent> _weaponSuffixes = new();
 
-    private readonly WeaponFactory _weaponFactory1 = new();
-    private readonly WeaponFactory _weaponFactory2 = new();
-    private readonly WeaponFactory _weaponFactory3 = new();
+    private WeaponFactory _weaponFactory1 = new();
+    private WeaponFactory _weaponFactory2 = new();
+    private WeaponFactory _weaponFactory3 = new();
     
     private readonly Dictionary<string, ArmorComponent> _armorPrefixes = new();
     private readonly Dictionary<string, ArmorComponent> _armorTypes = new();
     private readonly Dictionary<string, ArmorComponent> _armorSuffixes = new();
     
+    private ArmorFactory _armorFactory1 = new();
+    private ArmorFactory _armorFactory2 = new();
+    private ArmorFactory _armorFactory3 = new();
+
     private readonly Dictionary<string, (string, int)> _enemyTypes = new();
+    
+    private EnemyFactory _enemyFactory1;
+    private EnemyFactory _enemyFactory2;
+    private EnemyFactory _enemyFactory3;
     
     private readonly Dictionary<string, Item> _items = new();
 
     private LootFactory _lootFactory1;
     private LootFactory _lootFactory2;
     private LootFactory _lootFactory3;
-
-    private readonly ArmorFactory _armorFactory1 = new();
-    private readonly ArmorFactory _armorFactory2 = new();
-    private readonly ArmorFactory _armorFactory3 = new();
     
-    private readonly EnemyFactory _enemyFactory1;
-    private readonly EnemyFactory _enemyFactory2;
-    private readonly EnemyFactory _enemyFactory3;
-
     private Player _player;
     
     private readonly List<Floor> _floors = [];
@@ -62,13 +61,7 @@ public class Game
         _enemyFactory1 = new EnemyFactory(_weaponFactory1, _armorFactory1);
         _enemyFactory2 = new EnemyFactory(_weaponFactory2, _armorFactory2);
         _enemyFactory3 = new EnemyFactory(_weaponFactory3, _armorFactory3);
-    
-        _enemyFactory1 = new(_weaponFactory1, _armorFactory1);
-        _enemyFactory2 = new(_weaponFactory2, _armorFactory2);
-        _enemyFactory3 = new(_weaponFactory3, _armorFactory3);
-
-        InstantiateEnemyFactories();
-
+        
         InstantiateEnemyList();
         InstantiateEnemyFactories();
 
@@ -84,8 +77,7 @@ public class Game
         _player = new Player(playerName, 20, 
                             _weaponFactory1.GenerateWeapon("Rusty", "Sword", "Clumsy"), 
                             _armorFactory1.GenerateArmor("Rusty", "Chain", "Clumsy"));
-
-        _currentState = HandleCombat;
+        
     }
     
     public void Run()
@@ -104,135 +96,11 @@ public class Game
     {
         
     }
-    
-    private void HandleCombat()
-    {
-        List<Character> enemies = (_floors[_currentFloorIndex].CurrentRoom as CombatRoom)!.Enemies;
-
-        bool isPlayerTurn = true;
-        while (enemies.Count > 0)
-        {
-            if (isPlayerTurn)
-                isPlayerTurn = CombatPlayerTurn(ref enemies);
-            else
-                CombatEnemyTurn(enemies);
-
-            isPlayerTurn = !isPlayerTurn;
-            
-            Thread.Sleep(1000);
-            Console.Clear();
-        }
-    }
-
-    private void HandleLoot()
-    {
-        Room room = _floors[_currentFloorIndex].CurrentRoom;
-
-        
-    }
-    
-    private void HandleShop()
-    {
-        
-    }
 
     private void NextFloor()
     {
         _currentFloorIndex++;
         TextHandler.PrettyWrite("You arrive on the next floor of the dungeon. Who knows what challenges await you here? ", TextHandler.TextType.Description);
-        Console.WriteLine("Not implemented yet");
-        Console.ReadLine();
-
-        int amountOfRooms = random.Next(3) + 2;
-        List<Room> rooms = new List<Room>();
-
-        // Create rooms to choose from
-        for (int i = 0; i < amountOfRooms; i++)
-        {
-        }
-        
-        string description = "Before you are multiple pathways, each leading to a different room. Which path do you choose?";
-        
-        //ChoiceEvent choice = new(description, )
-    }
-
-    /// <returns>Whether the action taken should end the turn</returns>
-    private bool CombatPlayerTurn(ref List<Character> enemies)
-    {
-        const string combatDescription = "It's your turn! What is your next move?";
-        string[] combatChoices = ["Attack", "Use item"];
-
-        ChoiceEvent combatChoice = new(combatDescription, combatChoices);
-        int choice = combatChoice.GetChoice();
-        
-        switch (choice)
-        {
-            case 1:
-                const string attackDescription = "Who do you want to attack?";
-                string[] attackChoices = new string[enemies.Count];
-
-                for (int i = 0; i < enemies.Count; i++)
-                {
-                    attackChoices[i] = enemies[i].GetCombatPrint();
-                }
-
-                ChoiceEvent attackChoice = new(attackDescription, attackChoices);
-                int enemyIndex = attackChoice.GetChoice() - 1;
-                
-                _player.Attack(enemies[enemyIndex]);
-
-                if(enemies[enemyIndex].IsDead)
-                    enemies.RemoveAt(enemyIndex);
-                
-                return true;
-            case 2:
-                if (_player.IsInventoryEmpty())
-                {
-                    TextHandler.PrettyWrite("You have no items!\n", TextHandler.TextType.Bad);
-                    return false;
-                }
-                
-                const string useItemDescription = "What item do you want to use?";
-                List<string> useItemChoices = [];
-                useItemChoices.AddRange(_player.Inventory.OfType<Item>().Select(item => item.Name));
-
-                //useItemChoices = (from item in _player.Inventory select item.Name).ToList();
-                
-                ChoiceEvent useItemChoice = new(useItemDescription, useItemChoices.ToArray());
-                int itemIndex = useItemChoice.GetChoice() - 1;
-                
-                return _player.UseItem(itemIndex);
-            default:
-                throw new ArgumentOutOfRangeException();
-        }
-    }
-
-    private void CombatEnemyTurn(List<Character> enemies)
-    {
-        for (int i = 0; i < enemies.Count; i++)
-        {
-            var enemy = enemies[i];
-            
-            
-            int rolledValue = random.Next(10);
-
-            switch (rolledValue)
-            {
-                case 0: // Attack ally (10%)
-                    int enemyIndex = random.Next(enemies.Count);
-                    enemy.Attack(enemies[enemyIndex]);
-                    
-                    if(enemy.IsDead)
-                        enemies.RemoveAt(enemyIndex);
-                    break;
-                case 1: // Do nothing (10%)
-                    TextHandler.PrettyWrite($"{enemy.Name} skips their turn.\n", TextHandler.TextType.Description);
-                    break;
-                default: // Attack player (80%)
-                    enemy.Attack(_player);
-                    break;
-            }
-        }
     }
     
     #endregion
@@ -373,17 +241,17 @@ public class Game
 
     private void InstantiateEnemyFactories()
     {
-        _enemyFactory1.RegisterEnemyType(5, _enemyTypes["Skeleton"]);
-        _enemyFactory1.RegisterEnemyType(3, _enemyTypes["Goblin"]);
-        _enemyFactory1.RegisterEnemyType(2, _enemyTypes["Ogre"]);
+        _enemyFactory1.RegisterEnemyType("Skeleton", 5, _enemyTypes["Skeleton"]);
+        _enemyFactory1.RegisterEnemyType("Goblin", 3, _enemyTypes["Goblin"]);
+        _enemyFactory1.RegisterEnemyType("Ogre", 2, _enemyTypes["Ogre"]);
         
-        _enemyFactory2.RegisterEnemyType(5, _enemyTypes["Goblin"]);
-        _enemyFactory2.RegisterEnemyType(3, _enemyTypes["Ogre"]);
-        _enemyFactory2.RegisterEnemyType(2, _enemyTypes["Undead"]);
+        _enemyFactory2.RegisterEnemyType("Goblin", 5, _enemyTypes["Goblin"]);
+        _enemyFactory2.RegisterEnemyType("Ogre", 3, _enemyTypes["Ogre"]);
+        _enemyFactory2.RegisterEnemyType("Undead", 2, _enemyTypes["Undead"]);
         
-        _enemyFactory3.RegisterEnemyType(5, _enemyTypes["Ogre"]);
-        _enemyFactory3.RegisterEnemyType(3, _enemyTypes["Undead"]);
-        _enemyFactory3.RegisterEnemyType(2, _enemyTypes["UndeadKnight"]);
+        _enemyFactory3.RegisterEnemyType("Ogre", 5, _enemyTypes["Ogre"]);
+        _enemyFactory3.RegisterEnemyType("Undead", 3, _enemyTypes["Undead"]);
+        _enemyFactory3.RegisterEnemyType("UndeadKnight", 2, _enemyTypes["UndeadKnight"]);
     }
 
     private void InstantiateItemList()
