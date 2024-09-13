@@ -23,6 +23,6 @@ Accuracy: {Accuracy}
 
     public override string ToString()
     {
-        return $"{Name} [{Damage} Damage] [{Accuracy} Accuracy]";
+        return $"{Name} [{Damage} Damage] [{Accuracy} Accuracy] [{CritChance} Crit Chance]";
     }
 }
