@@ -120,6 +120,6 @@ public class CombatRoom : Room
 
     public override string ToString()
     {
-        return $"Clearing this room will grant you {_lootHoard.Gold} gold and {(_lootHoard.Item is not null ? _lootHoard.Item.ToString() : "no item")}";
+        return $"Clearing this room will grant you {(_lootHoard.Item is not null ? _lootHoard.Item.ToString() : "heaps of gold")}";
     }
 }

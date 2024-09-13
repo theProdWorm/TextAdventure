@@ -73,22 +73,24 @@ public class Floor
         Door shopDoor = new Door(shopRoom, EnterRoom);
         _rooms[^1].AddDoor(shopDoor);
         _rooms[^2].AddDoor(shopDoor);
-        _rooms.Add(shopRoom);
 
         Room nextFloorRoom = _roomFactory.GenerateNextFloorRoom();
         Door nextFloorDoor = new Door(nextFloorRoom, EnterRoom);
+        _rooms[^1].AddDoor(nextFloorDoor);
         _rooms[^2].AddDoor(nextFloorDoor);
-        _rooms[^3].AddDoor(nextFloorDoor);
-        _rooms.Add(nextFloorRoom);
 
         if (_generateBonusRoom)
         {
             Room bonusRoom = _roomFactory.GenerateBonusRoom();
             Door bonusDoor = new Door(bonusRoom, EnterRoom);
-            _rooms[^3].AddDoor(bonusDoor);
-            _rooms[^4].AddDoor(bonusDoor);
+            _rooms[^1].AddDoor(bonusDoor);
+            _rooms[^2].AddDoor(bonusDoor);
+            shopRoom.AddDoor(bonusDoor);
+            bonusRoom.AddDoor(shopDoor);
             _rooms.Add(bonusRoom);
         }
+        _rooms.Add(shopRoom);
+        _rooms.Add(nextFloorRoom);
     }
 
     private void EnterRoom(Room room)
