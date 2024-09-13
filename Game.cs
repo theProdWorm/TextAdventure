@@ -81,9 +81,7 @@ public class Game
                             _armorFactory1.GenerateArmor("Rusty", "Chain", "Clumsy"), 
                             LoseGame);
         _player.Inventory[0] = _items["HealthPotion"];
-
-        _mainMenu = mainMenu;
-        _exitGame = exitGame;
+        
     }
     
     public void Run()
@@ -173,15 +171,15 @@ public class Game
         _armorPrefixes.Add("Craftsmans", new ArmorComponent("Craftsman's", 5, 0f));
         _armorPrefixes.Add("Mighty", new ArmorComponent("Mighty", 10, 0f));
         
-        _armorTypes.Add("Leather", new ArmorComponent("Leather Armor", 2, 0.5f));
+        _armorTypes.Add("Leather", new ArmorComponent("Leather Armor", 2, 0.3f));
         _armorTypes.Add("Chain", new ArmorComponent("Chainmail", 5, 0.0f));
         _armorTypes.Add("Plate", new ArmorComponent("Plate Armor", 10, -1.0f));
         
-        _armorSuffixes.Add("Clumsy", new ArmorComponent("of Clumsiness", 0, -0.3f));
-        _armorSuffixes.Add("Unwieldy", new ArmorComponent("of Unwieldiness", 0, -0.1f));
+        _armorSuffixes.Add("Clumsy", new ArmorComponent("of Clumsiness", 0, -0.1f));
+        _armorSuffixes.Add("Unwieldy", new ArmorComponent("of Unwieldiness", 0, -0.05f));
         _armorSuffixes.Add("Normal", new ArmorComponent("", 0, 0f));
-        _armorSuffixes.Add("Swift", new ArmorComponent("of Swiftness", 0, 0.3f));
-        _armorSuffixes.Add("Divine", new ArmorComponent("of Divine Protection", 0, 0.5f));
+        _armorSuffixes.Add("Swift", new ArmorComponent("of Swiftness", 0, 0.2f));
+        _armorSuffixes.Add("Divine", new ArmorComponent("of Divine Protection", 0, 0.4f));
     }
 
     private void InstantiateWeaponFactories()
@@ -309,14 +307,14 @@ public class Game
     {
         _lootFactory1.RegisterItem("LesserHealthPotion", 8, _items["LesserHealthPotion"]);
         _lootFactory1.RegisterItem("HealthPotion", 1, _items["HealthPotion"]);
-        _lootFactory1.RegisterItem("Key", 1, _items["Key"]);
+        _lootFactory1.RegisterItem("Key", 1000, _items["Key"]);
         
         _lootFactory1.RegisterLootWeight(1, LootType.Weapon);
         _lootFactory1.RegisterLootWeight(1, LootType.Armor);
         _lootFactory1.RegisterLootWeight(2, LootType.Item);
         _lootFactory1.RegisterLootWeight(2, LootType.Gold);
         
-        _lootFactory2.RegisterItem("LesserHealthPotion", 3, _items["LesserHealthPotion"]);
+        _lootFactory1.RegisterItem("LesserHealthPotion", 3, _items["LesserHealthPotion"]);
         _lootFactory2.RegisterItem("HealthPotion", 5, _items["HealthPotion"]);
         _lootFactory2.RegisterItem("GreaterHealthPotion", 1, _items["GreaterHealthPotion"]);
         _lootFactory2.RegisterItem("Key", 1, _items["Key"]);
@@ -326,7 +324,9 @@ public class Game
         _lootFactory2.RegisterLootWeight(2, LootType.Item);
         _lootFactory2.RegisterLootWeight(2, LootType.Gold);
         
-        _lootFactory3.RegisterItem("HealthPotion", 8, _items["HealthPotion"]);
+        _lootFactory3.RegisterItem("HealthPotion", 5, _items["HealthPotion"]);
+        _lootFactory3.RegisterItem("GreaterHealthPotion", 5, _items["GreaterHealthPotion"]);
+        _lootFactory3.RegisterItem("Key", 2, _items["Key"]);
         
         _lootFactory3.RegisterLootWeight(3, LootType.Weapon);
         _lootFactory3.RegisterLootWeight(3, LootType.Armor);
@@ -337,7 +337,7 @@ public class Game
 
     private void InstantiateFloors(int roomsPerFloor)
     {
-        Floor floor1 = new Floor(_weaponFactory1, _armorFactory1, _enemyFactory1, _lootFactory1, roomsPerFloor, 1, NextFloor);
+        Floor floor1 = new Floor(_weaponFactory1, _armorFactory1, _enemyFactory1, _lootFactory1, roomsPerFloor, 1, NextFloor, true);
         Floor floor2 = new Floor(_weaponFactory2, _armorFactory2, _enemyFactory2, _lootFactory2, roomsPerFloor, 2, NextFloor, true);
         Floor floor3 = new Floor(_weaponFactory3, _armorFactory3, _enemyFactory3, _lootFactory3, roomsPerFloor, 3, NextFloor);
         _floors.AddRange([floor1, floor2, floor3]);

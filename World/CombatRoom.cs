@@ -83,18 +83,13 @@ public class CombatRoom : Room
                 }
                 
                 const string useItemDescription = "What item do you want to use?";
-                List<string> useItemChoices = [];
-                //useItemChoices.AddRange(player.Inventory.OfType<Item>().Select(item => item.Name));
-                for (int i = 0; i < player.Inventory.Length; i++)
-                {
-                    useItemChoices.Add(player.Inventory[i] != null ? player.Inventory[i].Name : "Empty");
-                }
-                //useItemChoices = (from item in _player.Inventory select item.Name).ToList();
+                List<string> useItemChoices = player.Inventory.Select(item => item != null ? item.Name : "Empty").ToList();
                 
                 ChoiceEvent useItemChoice = new(useItemDescription, useItemChoices.ToArray());
                 int itemIndex = useItemChoice.GetChoice();
                 
-                return player.UseItem(itemIndex);
+                player.UseItem(itemIndex);
+                return false;
             default:
                 throw new ArgumentOutOfRangeException();
         }

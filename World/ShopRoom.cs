@@ -1,4 +1,5 @@
 using TextAdventure.Characters;
+using TextAdventure.Factories;
 using TextAdventure.Items.Items;
 using TextAdventure.Items.Loot;
 using TextAdventure.States;

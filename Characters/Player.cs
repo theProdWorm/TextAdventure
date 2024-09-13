@@ -50,23 +50,27 @@ public class Player : Character
         return true;
     }
     
-    public bool UseItem(int index)
+    public void UseItem(int index)
     {
         var item = Inventory[index];
+
+        if (item == null)
+        {
+            TextHandler.PrettyWrite($"No item to use in that slot.", TextHandler.TextType.Bad);
+            return;
+        }
+
         switch (item!.Type)
         {
             case Item.ItemType.Healing:
                 Heal((item as HealthPotion)!.HealAmount);
                 Inventory[index] = null;
-                return true;
                 break;
             case Item.ItemType.Key:
-                TextHandler.PrettyWrite("The enemy doesn't seem to have a keyhole!", isLastLine: true);
-                return false;
+                TextHandler.PrettyWrite("The enemy doesn't seem to have a keyhole!", TextHandler.TextType.Bad);
                 break;
             default:
-                TextHandler.PrettyWrite("Item is not usable.", TextHandler.TextType.Bad, true);
-                return false;
+                TextHandler.PrettyWrite("Item is not usable.", TextHandler.TextType.Bad);
                 break;
         }
     }
@@ -141,7 +145,7 @@ public class Player : Character
             TextHandler.PrettyWrite($"You received {item.ToString()}! \n");
             TextHandler.PrettyWrite(
                 $"You currently have {(IsInventoryFull() ? "no" : EmptyInventorySpaces())} empty spaces \n");
-            ChoiceEvent choiceEvent = new ChoiceEvent("Pick up item? ", ["Yes", "No"]);
+            ChoiceEvent choiceEvent = new ChoiceEvent($"Pick up {item.Name}? ", ["Yes", "No"]);
             pickUp = choiceEvent.GetChoice() == 0;
         }
         if (pickUp)

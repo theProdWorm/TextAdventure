@@ -1,15 +1,12 @@
-using System.ComponentModel;
-using TextAdventure.Factories;
 using TextAdventure.Items.Items;
-using TextAdventure.Items.Armors;
-using TextAdventure.Items.Weapons;
+using TextAdventure.Items.Loot;
 
-namespace TextAdventure.Items.Loot;
+namespace TextAdventure.Factories;
 
 public class LootFactory(WeaponFactory weaponFactory, ArmorFactory armorFactory) : Factory
 {
-    private WeaponFactory _weaponFactory = weaponFactory;
-    private ArmorFactory _armorFactory = armorFactory;
+    private readonly WeaponFactory _weaponFactory = weaponFactory;
+    private readonly ArmorFactory _armorFactory = armorFactory;
     
     private readonly Dictionary<string, WeightedElement<Item>> _items = [];
 
@@ -32,7 +29,7 @@ public class LootFactory(WeaponFactory weaponFactory, ArmorFactory armorFactory)
         
         Item? item = null;
 
-        int gold = Game.random.Next(5, 30);
+        int gold = Game.random.Next(5, 10);
         switch (lootType)
         {
             case LootType.Weapon:
@@ -45,7 +42,7 @@ public class LootFactory(WeaponFactory weaponFactory, ArmorFactory armorFactory)
                 item = GetRandomElementByWeight(_items.Values.ToList());
                 break;
             default:
-                gold += Game.random.Next(5, 30);
+                gold += Game.random.Next(20, 60);
                 break;
         }
         return new LootHoard(gold, lootType, item);
