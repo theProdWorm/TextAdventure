@@ -44,7 +44,9 @@ public class Door
             return false;
 
         player.Inventory[keyIndex] = null;
-        TextHandler.PrettyWrite($"{player.Name} used a key to enter a locked room!");
+        TextHandler.PrettyWrite($"{player.Name} used a key to enter a locked room!\n");
+
+        _enter(_roomBehindDoor);
 
         return true;
     }

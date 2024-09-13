@@ -29,9 +29,9 @@ public class BonusRoom(LootHoard armorChest, LootHoard weaponChest, LootHoard go
 
         player.ReceiveReward(chestChoice.GetChoice() switch
         {
-            1 => _armorChest,
-            2 => _weaponChest,
-            3 => _goldChest,
+            0 => _armorChest,
+            1 => _weaponChest,
+            2 => _goldChest,
             _ => _goldChest
         });
         
@@ -40,6 +40,6 @@ public class BonusRoom(LootHoard armorChest, LootHoard weaponChest, LootHoard go
 
     public override string ToString()
     {
-        return "This locked room is a treasure chamber! Who knows what rewards it may yield?";
+        return "[Locked] [Treasure Chamber]";
     }
 }

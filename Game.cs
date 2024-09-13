@@ -77,8 +77,8 @@ public class Game
         InstantiateFloors(roomsPerFloor);
         
         _player = new Player(playerName, 20, 
-                            _weaponFactory1.GenerateWeapon("Rusty", "Sword", "Clumsy"), 
-                            _armorFactory1.GenerateArmor("Rusty", "Chain", "Clumsy"), 
+                            _weaponFactory1.GenerateWeapon("Rusty", "Sword", "Normal"), 
+                            _armorFactory1.GenerateArmor("Rusty", "Chain", "Normal"), 
                             LoseGame);
         _player.Inventory[0] = _items["HealthPotion"];
 
@@ -152,11 +152,11 @@ public class Game
         _weaponPrefixes.Add("Sharp", new WeaponComponent("Sharp", 3, 0f, 0f));
         _weaponPrefixes.Add("Mighty", new WeaponComponent("Mighty", 8, 0f, 0f));
         
-        _weaponTypes.Add("Dagger", new WeaponComponent("Dagger", 5, 1.2f, 0.5f));
-        _weaponTypes.Add("Sword", new WeaponComponent("Sword", 7, 1.0f, 0.2f));
+        _weaponTypes.Add("Dagger", new WeaponComponent("Dagger", 5, 1.2f, 0.35f));
+        _weaponTypes.Add("Sword", new WeaponComponent("Sword", 7, 1.0f, 0.1f));
         _weaponTypes.Add("Hammer", new WeaponComponent("War Hammer", 10, 0.8f, 0.05f));
         _weaponTypes.Add("Spear", new WeaponComponent("Spear", 7, 1.5f, 0.0f));
-        _weaponTypes.Add("Flail", new WeaponComponent("Flail", 10, 0.6f, 0.4f));
+        _weaponTypes.Add("Flail", new WeaponComponent("Flail", 10, 0.6f, 0.25f));
         
         _weaponSuffixes.Add("Clumsy", new WeaponComponent("of Clumsiness", 0, -0.2f, 0f));
         _weaponSuffixes.Add("Unwieldy", new WeaponComponent("of Unwieldiness", 0, -0.1f, 0f));
@@ -173,11 +173,11 @@ public class Game
         _armorPrefixes.Add("Craftsmans", new ArmorComponent("Craftsman's", 5, 0f));
         _armorPrefixes.Add("Mighty", new ArmorComponent("Mighty", 10, 0f));
         
-        _armorTypes.Add("Leather", new ArmorComponent("Leather Armor", 2, 0.5f));
+        _armorTypes.Add("Leather", new ArmorComponent("Leather Armor", 2, 0.3f));
         _armorTypes.Add("Chain", new ArmorComponent("Chainmail", 5, 0.0f));
         _armorTypes.Add("Plate", new ArmorComponent("Plate Armor", 10, -1.0f));
         
-        _armorSuffixes.Add("Clumsy", new ArmorComponent("of Clumsiness", 0, -0.3f));
+        _armorSuffixes.Add("Clumsy", new ArmorComponent("of Clumsiness", 0, -0.2f));
         _armorSuffixes.Add("Unwieldy", new ArmorComponent("of Unwieldiness", 0, -0.1f));
         _armorSuffixes.Add("Normal", new ArmorComponent("", 0, 0f));
         _armorSuffixes.Add("Swift", new ArmorComponent("of Swiftness", 0, 0.3f));
@@ -207,6 +207,7 @@ public class Game
         _weaponFactory2.RegisterWeaponType("Dagger", 1, _weaponTypes["Dagger"]);
         _weaponFactory2.RegisterWeaponType("Sword", 1, _weaponTypes["Sword"]);
         _weaponFactory2.RegisterWeaponType("Hammer", 1, _weaponTypes["Hammer"]);
+        _weaponFactory2.RegisterWeaponType("Spear", 1, _weaponTypes["Spear"]);
         
         _weaponFactory2.RegisterSuffix("Unwieldy", 5, _weaponSuffixes["Unwieldy"]);
         _weaponFactory2.RegisterSuffix("Normal", 3, _weaponSuffixes["Normal"]);
@@ -221,6 +222,8 @@ public class Game
         _weaponFactory3.RegisterWeaponType("Dagger", 1, _weaponTypes["Dagger"]);
         _weaponFactory3.RegisterWeaponType("Sword", 1, _weaponTypes["Sword"]);
         _weaponFactory3.RegisterWeaponType("Hammer", 1, _weaponTypes["Hammer"]);
+        _weaponFactory3.RegisterWeaponType("Spear", 1, _weaponTypes["Spear"]);
+        _weaponFactory3.RegisterWeaponType("Flail", 1, _weaponTypes["Flail"]);
         
         _weaponFactory3.RegisterSuffix("Normal", 5, _weaponSuffixes["Clumsy"]);
         _weaponFactory3.RegisterSuffix("Truestrike", 3, _weaponSuffixes["Truestrike"]);

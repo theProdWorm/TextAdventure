@@ -89,7 +89,7 @@ public class Floor
         if (_generateBonusRoom)
         {
             Room bonusRoom = _roomFactory.GenerateBonusRoom();
-            Door bonusDoor = new Door(bonusRoom, EnterRoom);
+            Door bonusDoor = new Door(bonusRoom, EnterRoom, true);
             //_rooms[^1].AddDoor(bonusDoor);
             //_rooms[^2].AddDoor(bonusDoor);
             
@@ -97,8 +97,8 @@ public class Floor
             {
                 room.AddDoor(bonusDoor);
             }
-            shopRoom.AddDoor(bonusDoor);
             bonusRoom.AddDoor(shopDoor);
+            bonusRoom.AddDoor(nextFloorDoor);
             //_rooms.Add(bonusRoom);
             endRooms.Add(bonusRoom);
         }
