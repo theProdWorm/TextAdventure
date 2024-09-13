@@ -6,13 +6,15 @@ using TextAdventure.Items.Weapons;
 
 public class Character
 {
+    private static readonly float _damageDeviation = 0.2f;
+    
     public string Name { get; }
 
     private readonly int _baseMaxHealth;
     private int EffectiveMaxHealth => _baseMaxHealth + _armor?.Health ?? _baseMaxHealth;
     private int _currentHealth;
-    private Weapon? _weapon;
-    private Armor? _armor;
+    protected Weapon? _weapon;
+    protected Armor? _armor;
 
     public Character(string name, int health)
     {
@@ -27,26 +29,29 @@ public class Character
     public void Attack(Character target)
     {
         TextHandler.PrettyWrite(
-            $"{Name} is trying to attack {(target == this ? "itself" :target.Name)} using {_weapon.Name}!\n",
+            $"{Name} is trying to attack {(target == this ? "itself" :target.Name)} using {_weapon!.Name}!\n",
             TextHandler.TextType.Description);
         Thread.Sleep(400);
-        
-        target.ReceiveAttack(_weapon.Damage, _weapon.Accuracy);
+
+        target.ReceiveAttack(_weapon.Damage, _weapon.Accuracy, Game.random.NextSingle() <= _weapon.CritChance);
     }
     
     /// <returns>Whether the character is still alive</returns>
-    private void ReceiveAttack(int damage, float accuracy)
+    private void ReceiveAttack(int damage, float accuracy, bool isCrit)
     {
-        float effectiveAccuracy = accuracy * (1 - _armor.Evasion);
+        float effectiveAccuracy = accuracy * (1 - _armor!.Evasion);
         
         float rolledValue = Game.random.NextSingle();
         bool isHit = rolledValue <= effectiveAccuracy;
 
         if (isHit)
         {
-            _currentHealth -= damage;
+            float deviation = 1 - (Game.random.NextSingle() * _damageDeviation - _damageDeviation * 0.5f);
+            int realDamage = (int) MathF.Round(damage * deviation * (isCrit ? 2 : 1));
+            
+            _currentHealth -= realDamage;
             TextHandler.PrettyWrite(
-                $"{Name} got hit for {damage} damage!" +
+                $"{Name} got hit for {realDamage} damage!" +
                 (IsDead ? $"\n{Name} died. \n" : $" They now have {_currentHealth} health.\n"),
                 TextHandler.TextType.Bad);
         }
@@ -87,7 +92,7 @@ public class Character
     public string GetCombatPrint()
     {
         return $"{Name}, {_currentHealth} / {EffectiveMaxHealth} health" + 
-               $"\n\t\tEquipped weapon: {_weapon.Name}" +
-               $"\n\t\tEquipped armor: {_armor.Name}";
+               $"\n\t\tEquipped weapon: {_weapon!.Name}" +
+               $"\n\t\tEquipped armor: {_armor!.Name}";
     }
 }

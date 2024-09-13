@@ -108,21 +108,23 @@ public class Game
     #region Item Instantiation
     private void InstantiateWeaponLists()
     {
-        _weaponPrefixes.Add("Rusty", new WeaponComponent("Rusty", -2, 0f));
-        _weaponPrefixes.Add("Blunt", new WeaponComponent("Blunt", -1, 0f));
-        _weaponPrefixes.Add("Normal", new WeaponComponent("", 0, 0f));
-        _weaponPrefixes.Add("Sharp", new WeaponComponent("Sharp", 3, 0f));
-        _weaponPrefixes.Add("Mighty", new WeaponComponent("Mighty", 8, 0f));
+        _weaponPrefixes.Add("Rusty", new WeaponComponent("Rusty", -2, 0f, 0f));
+        _weaponPrefixes.Add("Blunt", new WeaponComponent("Blunt", -1, 0f, 0f));
+        _weaponPrefixes.Add("Normal", new WeaponComponent("", 0, 0f, 0f));
+        _weaponPrefixes.Add("Sharp", new WeaponComponent("Sharp", 3, 0f, 0f));
+        _weaponPrefixes.Add("Mighty", new WeaponComponent("Mighty", 8, 0f, 0f));
         
-        _weaponTypes.Add("Dagger", new WeaponComponent("Dagger", 5, 1.0f));
-        _weaponTypes.Add("Sword", new WeaponComponent("Sword", 7, 0.9f));
-        _weaponTypes.Add("Hammer", new WeaponComponent("War Hammer", 10, 0.8f));
+        _weaponTypes.Add("Dagger", new WeaponComponent("Dagger", 5, 1.0f, 0.5f));
+        _weaponTypes.Add("Sword", new WeaponComponent("Sword", 7, 0.9f, 0.2f));
+        _weaponTypes.Add("Hammer", new WeaponComponent("War Hammer", 10, 0.8f, 0.05f));
+        _weaponTypes.Add("Spear", new WeaponComponent("Spear", 7, 1.2f, 0.0f));
+        _weaponTypes.Add("Flail", new WeaponComponent("Flail", 10, 0.6f, 0.5f));
         
-        _weaponSuffixes.Add("Clumsy", new WeaponComponent("of Clumsiness", 0, -0.2f));
-        _weaponSuffixes.Add("Unwieldy", new WeaponComponent("of Unwieldiness", 0, -0.1f));
-        _weaponSuffixes.Add("Normal", new WeaponComponent("", 0, 0f));
-        _weaponSuffixes.Add("Truestrike", new WeaponComponent("of True Strike", 0, 0.3f));
-        _weaponSuffixes.Add("Divine", new WeaponComponent("of Divine Retribution", 0, 0.5f));
+        _weaponSuffixes.Add("Clumsy", new WeaponComponent("of Clumsiness", 0, -0.2f, 0f));
+        _weaponSuffixes.Add("Unwieldy", new WeaponComponent("of Unwieldiness", 0, -0.1f, 0f));
+        _weaponSuffixes.Add("Normal", new WeaponComponent("", 0, 0f, 0f));
+        _weaponSuffixes.Add("Truestrike", new WeaponComponent("of True Strike", 0, 0.3f, 0f));
+        _weaponSuffixes.Add("Divine", new WeaponComponent("of Divine Retribution", 0, 0.5f, 0f));
     }
 
     private void InstantiateArmorLists()

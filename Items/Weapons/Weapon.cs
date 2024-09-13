@@ -10,6 +10,7 @@ public class Weapon(WeaponComponent prefix, WeaponComponent weaponType, WeaponCo
     
     public int Damage => _prefix.Damage + _weaponType.Damage + _suffix.Damage;
     public float Accuracy => _prefix.Accuracy + _weaponType.Accuracy + _suffix.Accuracy;
+    public float CritChance => _prefix.CritChance + _weaponType.CritChance + _suffix.CritChance;
     
     public override void Print()
     {
