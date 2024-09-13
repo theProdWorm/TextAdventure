@@ -21,4 +21,22 @@ public abstract class Factory
         // If loop did not return, we are on the last element
         return sortedList.Last().Element;
     }
+    
+    protected List<WeightedElement<T>> GetListWithInvertedWeights<T>(in List<WeightedElement<T>> list)
+    {
+        var sortedList = list.OrderByDescending(x => x.Weight).ToList();
+        
+        var invertedWeightsList = new List<WeightedElement<T>>();
+        
+        for (int i = 0; i < sortedList.Count; i++)
+        {
+            var invertedWeightElement = new WeightedElement<T>(
+                sortedList[i].Weight, // Get the weight of the current item
+                sortedList[^(i + 1)].Element); // Match it with the corresponding element in reversed order
+            
+            invertedWeightsList.Add(invertedWeightElement);
+        }
+        
+        return invertedWeightsList;
+    }
 }

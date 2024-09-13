@@ -45,4 +45,15 @@ public class ArmorFactory : Factory
     {
         return new Armor(_prefixes[prefix].Element, _armorTypes[armorType].Element, _suffixes[suffix].Element);
     }
+    
+    public Armor GenerateGoodArmor()
+    {
+        var prefixes = GetListWithInvertedWeights(_prefixes.Values.ToList());
+        var armorTypes = GetListWithInvertedWeights(_armorTypes.Values.ToList());
+        var suffixes = GetListWithInvertedWeights(_suffixes.Values.ToList());
+        
+        return new Armor(GetRandomElementByWeight(prefixes), 
+            GetRandomElementByWeight(armorTypes),
+            GetRandomElementByWeight(suffixes));
+    }
 }

@@ -7,7 +7,8 @@ public enum LootType
     Weapon,
     Armor,
     Item,
-    Gold
+    Gold,
+    Random
 }
 
 public struct LootHoard(int gold, LootType type, Item? item = null)

@@ -36,7 +36,7 @@ public class CombatRoom : Room
             Console.Clear();
         }
         
-        player.RecieveReward(_lootHoard);
+        player.ReceiveReward(_lootHoard);
         
         ChooseDoor();
     }
@@ -128,6 +128,6 @@ public class CombatRoom : Room
 
     public override string ToString()
     {
-        return $"[Encounter] [Rewards {(_lootHoard.Item is not null ? _lootHoard.Item.Name : "heaps of gold")}]";
+        return $"Reward: {(_lootHoard.Item is not null ? _lootHoard.Item.ToString() : "Heaps of gold")}";
     }
 }

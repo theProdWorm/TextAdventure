@@ -66,7 +66,7 @@ public class Player : Character
         }
     }
 
-    public void RecieveReward(LootHoard loot)
+    public void ReceiveReward(LootHoard loot)
     {
         AddGold(loot.Gold);
         

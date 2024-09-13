@@ -11,7 +11,7 @@ public abstract class Item(string name, int value = 20)
     }
     
     public string Name { get; } = name.Trim();
-    public ItemType Type { get; } = ItemType.Healing;
+    public ItemType Type { get; protected init; } = ItemType.Healing;
 
     public int Value { get; } = value;
 

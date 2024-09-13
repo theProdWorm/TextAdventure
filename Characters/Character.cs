@@ -52,7 +52,7 @@ public class Character
             _currentHealth -= realDamage;
             
             if(isCrit)
-                TextHandler.PrettyWrite("It's a critical hit!");
+                TextHandler.PrettyWrite("It's a critical hit!\n");
             
             TextHandler.PrettyWrite(
                 $"{Name} got hit for {realDamage} damage!" +
@@ -95,8 +95,8 @@ public class Character
 
     public string GetCombatPrint()
     {
-        return $"{Name}, {_currentHealth} / {EffectiveMaxHealth} health" + 
-               $"\n\t\tEquipped armor: {_armor!.ToString()}" + 
+        return $"{Name}, {_currentHealth} / {EffectiveMaxHealth} health" +
+               $"\n\t\tEquipped armor: {_armor!.ToString()}" +
                $"\n\t\tEquipped weapon: {_weapon!.ToString()}";
     }
 }

@@ -25,9 +25,11 @@ public class LootFactory(WeaponFactory weaponFactory, ArmorFactory armorFactory)
         _lootWeights.Add(new WeightedElement<LootType>(weight, lootType));
     }
     
-    public LootHoard GenerateLoot()
+    public LootHoard GenerateLoot(LootType lootType = LootType.Random)
     {
-        LootType lootType = GetRandomElementByWeight(_lootWeights);
+        if(lootType == LootType.Random)
+            lootType = GetRandomElementByWeight(_lootWeights);
+        
         Item? item = null;
 
         int gold = Game.random.Next(5, 30);

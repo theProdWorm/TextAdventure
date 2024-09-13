@@ -14,8 +14,8 @@ public class Armor(ArmorComponent prefix, ArmorComponent armorType, ArmorCompone
 
     public override string ToString()
     {
-        int evasionPercent = (int) MathF.Round(Evasion / 100f);
+        int evasionPercent = (int) MathF.Round(Evasion * 100f);
         
-        return $"{Name} [+{Health} Health] [{evasionPercent}% Evasion]";
+        return $"{Name} [+{Health} Health] [{evasionPercent}% Evade Chance]";
     }
 }

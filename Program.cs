@@ -1,7 +1,6 @@
 ﻿using TextAdventure;
-using TextAdventure.Characters;
 
-TextHandler.PrettyWrite("What's your name?", TextHandler.TextType.Description, true);
+TextHandler.PrettyWrite("What's your name? (Default: Player)", TextHandler.TextType.Description, true);
 string playerName = Console.ReadLine()!;
 if (String.IsNullOrEmpty(playerName))
     playerName = "Player";

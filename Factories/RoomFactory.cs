@@ -33,7 +33,11 @@ public class RoomFactory(EnemyFactory enemyFactory, LootFactory lootFactory, Act
 
     public Room GenerateBonusRoom()
     {
-        return new BonusRoom();
+        LootHoard armorLoot = _lootFactory.GenerateLoot(LootType.Armor);
+        LootHoard weaponLoot = _lootFactory.GenerateLoot(LootType.Weapon);
+        LootHoard goldLoot = _lootFactory.GenerateLoot(LootType.Gold);
+
+        return new BonusRoom(armorLoot, weaponLoot, goldLoot);
     }
 
     public Room GenerateNextFloorRoom()

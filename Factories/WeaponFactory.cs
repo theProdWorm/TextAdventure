@@ -34,4 +34,15 @@ public class WeaponFactory : Factory
     {
         return new Weapon(_prefixes[prefix].Element, _weaponTypes[weaponType].Element, _suffixes[suffix].Element);
     }
+    
+    public Weapon GenerateGoodArmor()
+    {
+        var prefixes = GetListWithInvertedWeights(_prefixes.Values.ToList());
+        var armorTypes = GetListWithInvertedWeights(_weaponTypes.Values.ToList());
+        var suffixes = GetListWithInvertedWeights(_suffixes.Values.ToList());
+        
+        return new Weapon(GetRandomElementByWeight(prefixes), 
+            GetRandomElementByWeight(armorTypes),
+            GetRandomElementByWeight(suffixes));
+    }
 }
