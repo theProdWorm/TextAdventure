@@ -8,24 +8,32 @@
     "net8.0": []
   },
   "packageFolders": {
-    "C:\\Users\\emilr\\.nuget\\packages\\": {}
+    "C:\\Users\\josef\\.nuget\\packages\\": {},
+    "D:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\emilr\\RiderProjects\\TextAdventure\\TextAdventure.csproj",
+      "projectUniqueName": "C:\\Users\\josef\\Documents\\HiS\\År 1\\[1] Spelprogrammering 1\\TextAdventure\\TextAdventure.csproj",
       "projectName": "TextAdventure",
-      "projectPath": "C:\\Users\\emilr\\RiderProjects\\TextAdventure\\TextAdventure.csproj",
-      "packagesPath": "C:\\Users\\emilr\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\emilr\\RiderProjects\\TextAdventure\\obj\\",
+      "projectPath": "C:\\Users\\josef\\Documents\\HiS\\År 1\\[1] Spelprogrammering 1\\TextAdventure\\TextAdventure.csproj",
+      "packagesPath": "C:\\Users\\josef\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\josef\\Documents\\HiS\\År 1\\[1] Spelprogrammering 1\\TextAdventure\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "D:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\emilr\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\josef\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -64,7 +72,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.303/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
