@@ -245,10 +245,13 @@ public class Game
         _enemyFactory1.RegisterEnemyType("Goblin", 3, _enemyTypes["Goblin"]);
         _enemyFactory1.RegisterEnemyType("Ogre", 2, _enemyTypes["Ogre"]);
         
+        _enemyFactory2.RegisterEnemyType("Skeleton", 3, _enemyTypes["Skeleton"]);
         _enemyFactory2.RegisterEnemyType("Goblin", 5, _enemyTypes["Goblin"]);
         _enemyFactory2.RegisterEnemyType("Ogre", 3, _enemyTypes["Ogre"]);
         _enemyFactory2.RegisterEnemyType("Undead", 2, _enemyTypes["Undead"]);
         
+        _enemyFactory2.RegisterEnemyType("Skeleton", 1, _enemyTypes["Skeleton"]);
+        _enemyFactory2.RegisterEnemyType("Goblin", 3, _enemyTypes["Goblin"]);
         _enemyFactory3.RegisterEnemyType("Ogre", 5, _enemyTypes["Ogre"]);
         _enemyFactory3.RegisterEnemyType("Undead", 3, _enemyTypes["Undead"]);
         _enemyFactory3.RegisterEnemyType("UndeadKnight", 2, _enemyTypes["UndeadKnight"]);
@@ -263,15 +266,15 @@ public class Game
     {
         _lootFactory1.RegisterItem("HealthPotion", 8, _items["HealthPotion"]);
         
-        _lootFactory1.RegisterLootWeight(3, LootType.Weapon);
-        _lootFactory1.RegisterLootWeight(3, LootType.Armor);
+        _lootFactory1.RegisterLootWeight(1, LootType.Weapon);
+        _lootFactory1.RegisterLootWeight(1, LootType.Armor);
         _lootFactory1.RegisterLootWeight(2, LootType.Item);
         _lootFactory1.RegisterLootWeight(2, LootType.Gold);
         
         _lootFactory2.RegisterItem("HealthPotion", 8, _items["HealthPotion"]);
         
-        _lootFactory2.RegisterLootWeight(3, LootType.Weapon);
-        _lootFactory2.RegisterLootWeight(3, LootType.Armor);
+        _lootFactory2.RegisterLootWeight(2, LootType.Weapon);
+        _lootFactory2.RegisterLootWeight(2, LootType.Armor);
         _lootFactory2.RegisterLootWeight(2, LootType.Item);
         _lootFactory2.RegisterLootWeight(2, LootType.Gold);
         
