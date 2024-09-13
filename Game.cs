@@ -111,37 +111,37 @@ public class Game
         _weaponPrefixes.Add("Rusty", new WeaponComponent("Rusty", -2, 0f));
         _weaponPrefixes.Add("Blunt", new WeaponComponent("Blunt", -1, 0f));
         _weaponPrefixes.Add("Normal", new WeaponComponent("", 0, 0f));
-        _weaponPrefixes.Add("Sharp", new WeaponComponent("Sharp", 1, 0f));
-        _weaponPrefixes.Add("Mighty", new WeaponComponent("Mighty", 2, 0f));
+        _weaponPrefixes.Add("Sharp", new WeaponComponent("Sharp", 3, 0f));
+        _weaponPrefixes.Add("Mighty", new WeaponComponent("Mighty", 8, 0f));
         
-        _weaponTypes.Add("Dagger", new WeaponComponent("Dagger", 3, 1.0f));
-        _weaponTypes.Add("Sword", new WeaponComponent("Sword", 5, 0.9f));
-        _weaponTypes.Add("Hammer", new WeaponComponent("War Hammer", 7, 0.7f));
+        _weaponTypes.Add("Dagger", new WeaponComponent("Dagger", 5, 1.0f));
+        _weaponTypes.Add("Sword", new WeaponComponent("Sword", 7, 0.9f));
+        _weaponTypes.Add("Hammer", new WeaponComponent("War Hammer", 10, 0.8f));
         
         _weaponSuffixes.Add("Clumsy", new WeaponComponent("of Clumsiness", 0, -0.2f));
         _weaponSuffixes.Add("Unwieldy", new WeaponComponent("of Unwieldiness", 0, -0.1f));
         _weaponSuffixes.Add("Normal", new WeaponComponent("", 0, 0f));
-        _weaponSuffixes.Add("Truestrike", new WeaponComponent("of True Strike", 0, 0.1f));
-        _weaponSuffixes.Add("Divine", new WeaponComponent("of Divine Retribution", 0, 0.2f));
+        _weaponSuffixes.Add("Truestrike", new WeaponComponent("of True Strike", 0, 0.3f));
+        _weaponSuffixes.Add("Divine", new WeaponComponent("of Divine Retribution", 0, 0.5f));
     }
 
     private void InstantiateArmorLists()
     {
-        _armorPrefixes.Add("Rusty", new ArmorComponent("Rusty", -2, 0f));
-        _armorPrefixes.Add("Old", new ArmorComponent("Old", -1, 0f));
+        _armorPrefixes.Add("Rusty", new ArmorComponent("Rusty", -5, 0f));
+        _armorPrefixes.Add("Old", new ArmorComponent("Old", -2, 0f));
         _armorPrefixes.Add("Normal", new ArmorComponent("", 0, 0f));
-        _armorPrefixes.Add("Craftsmans", new ArmorComponent("Craftsmans'", 1, 0f));
-        _armorPrefixes.Add("Mighty", new ArmorComponent("Mighty", 2, 0f));
+        _armorPrefixes.Add("Craftsmans", new ArmorComponent("Craftsman's", 10, 0f));
+        _armorPrefixes.Add("Mighty", new ArmorComponent("Mighty", 20, 0f));
         
-        _armorTypes.Add("Leather", new ArmorComponent("Leather Armor", 1, 0.3f));
-        _armorTypes.Add("Chain", new ArmorComponent("Chainmail", 3, 0.2f));
-        _armorTypes.Add("Plate", new ArmorComponent("Plate Armor", 5, 0.1f));
+        _armorTypes.Add("Leather", new ArmorComponent("Leather Armor", 5, 0.5f));
+        _armorTypes.Add("Chain", new ArmorComponent("Chainmail", 10, 0.0f));
+        _armorTypes.Add("Plate", new ArmorComponent("Plate Armor", 20, -1.0f));
         
-        _armorSuffixes.Add("Clumsy", new ArmorComponent("of Clumsiness", 0, -0.2f));
+        _armorSuffixes.Add("Clumsy", new ArmorComponent("of Clumsiness", 0, -0.3f));
         _armorSuffixes.Add("Unwieldy", new ArmorComponent("of Unwieldiness", 0, -0.1f));
         _armorSuffixes.Add("Normal", new ArmorComponent("", 0, 0f));
-        _armorSuffixes.Add("Swift", new ArmorComponent("of Swiftness", 0, 0.1f));
-        _armorSuffixes.Add("Divine", new ArmorComponent("of Divine Protection", 0, 0.2f));
+        _armorSuffixes.Add("Swift", new ArmorComponent("of Swiftness", 0, 0.3f));
+        _armorSuffixes.Add("Divine", new ArmorComponent("of Divine Protection", 0, 0.5f));
     }
 
     private void InstantiateWeaponFactories()
@@ -250,8 +250,8 @@ public class Game
         _enemyFactory2.RegisterEnemyType("Ogre", 3, _enemyTypes["Ogre"]);
         _enemyFactory2.RegisterEnemyType("Undead", 2, _enemyTypes["Undead"]);
         
-        _enemyFactory2.RegisterEnemyType("Skeleton", 1, _enemyTypes["Skeleton"]);
-        _enemyFactory2.RegisterEnemyType("Goblin", 3, _enemyTypes["Goblin"]);
+        _enemyFactory3.RegisterEnemyType("Skeleton", 1, _enemyTypes["Skeleton"]);
+        _enemyFactory3.RegisterEnemyType("Goblin", 3, _enemyTypes["Goblin"]);
         _enemyFactory3.RegisterEnemyType("Ogre", 5, _enemyTypes["Ogre"]);
         _enemyFactory3.RegisterEnemyType("Undead", 3, _enemyTypes["Undead"]);
         _enemyFactory3.RegisterEnemyType("UndeadKnight", 2, _enemyTypes["UndeadKnight"]);
@@ -259,12 +259,15 @@ public class Game
 
     private void InstantiateItemList()
     {
-        _items.Add("HealthPotion", new HealthPotion("Health Potion", 5));
+        _items.Add("LesserHealthPotion", new HealthPotion("Lesser Health Potion", 10));
+        _items.Add("HealthPotion", new HealthPotion("Health Potion", 20));
+        _items.Add("GreaterHealthPotion", new HealthPotion("Greater Health Potion", 40));
+
     }
 
     private void InstantiateLootFactories()
     {
-        _lootFactory1.RegisterItem("HealthPotion", 8, _items["HealthPotion"]);
+        _lootFactory1.RegisterItem("LesserHealthPotion", 8, _items["LesserHealthPotion"]);
         
         _lootFactory1.RegisterLootWeight(1, LootType.Weapon);
         _lootFactory1.RegisterLootWeight(1, LootType.Armor);

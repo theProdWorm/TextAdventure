@@ -9,6 +9,6 @@ public class HealthPotion(string name, int healAmount)
 
     public override string ToString()
     {
-        return $"Name [Restore {healAmount} Health]";
+        return $"{Name} [Restore {healAmount} Health]";
     }
 }
