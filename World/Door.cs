@@ -41,7 +41,10 @@ public class Door
         }
         
         if(keyIndex < 0)
+        {
+            TextHandler.PrettyWrite("You don't seem to be able to unlock this door.\n");
             return false;
+        }
 
         player.Inventory[keyIndex] = null;
         TextHandler.PrettyWrite($"{player.Name} used a key to enter a locked room!\n");

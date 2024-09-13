@@ -28,7 +28,7 @@ public abstract class Room
         {
             choices[i] = _doors[i].ToString();
         }
-        ChoiceEvent choiceEvent = new ChoiceEvent($"Facing you are {_doors.Count} doors. Which will you enter? ", choices);
+        ChoiceEvent choiceEvent = new ChoiceEvent($"Facing you {(_doors.Count > 1 ? "are" : "is")} {_doors.Count} {(_doors.Count > 1 ? "doors" : "door")}. Which will you enter? ", choices);
         while (!_doors[choiceEvent.GetChoice()].TryEnter(player)) {}
     }
     
